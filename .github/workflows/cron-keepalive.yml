@@ -1,0 +1,18 @@
+name: VibLab Keep-Alive Cron
+
+on:
+  schedule:
+    # S'exécute toutes les 15 minutes (syntaxe Cron POSIX)
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Permet de lancer manuellement depuis l'onglet Actions GitHub
+
+jobs:
+  ping-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping VibLab Vercel Instance
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: "https://simulateur-de-vibration-industrielle.vercel.app/api/cron/keepalive"
+        run: |
+          curl -s -f -H "Authorization: Bearer $CRON_SECRET" "$APP_URL" || echo "Ping envoyé avec succès."

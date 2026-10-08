@@ -1,0 +1,6 @@
+{
+  "name": "Simulateur de Vibration Industrielle",
+  "description": "Un simulateur de formation interactif pour l'analyse des vibrations industrielles (roulements, engrenages, moteurs, balourd, signaux, conversion d'unités).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

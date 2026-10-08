@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build
+dist/
+build/
+coverage/
+
+# Temporary / Scratch & Python cache
+scratch/
+__pycache__/
+*.pyc
+
+# Logs & Environment
+*.log
+.env*
+!.env.example
+
+# Vercel & IDE
+.vercel/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

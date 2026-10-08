@@ -1,0 +1,2065 @@
+{
+  "version": "2.0",
+  "exportedAt": "2026-10-02T12:00:00.000Z",
+  "configs": {
+    "1": {
+      "id": 1,
+      "title": "Stratégie de maintenance & Fondamentaux",
+      "desc": "Maintenance conditionnelle, grandeurs vibratoires, capteurs & pièges de mesure",
+      "min": 45,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 25,
+      "showTrapBadgeDuringExam": false
+    },
+    "2": {
+      "id": 2,
+      "title": "Normes de sévérité ISO 10816-3 / ISO 20816-1",
+      "desc": "Groupes de machines, supports rigides/flexibles, zones A-D, seuils d'alarme et de déclenchement",
+      "min": 45,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 25,
+      "showTrapBadgeDuringExam": false
+    },
+    "3": {
+      "id": 3,
+      "title": "Balourd & Équilibrage dynamique 1 plan",
+      "desc": "Signature 1x, calcul vectoriel, masse d'essai, porte-à-faux, faux-rond & arbre cintré",
+      "min": 60,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 30,
+      "showTrapBadgeDuringExam": false
+    },
+    "4": {
+      "id": 4,
+      "title": "Lignage d'arbres & Défauts d'accouplement",
+      "desc": "Désalignement parallèle/angulaire, pied boîteux, dilatation thermique & tolérances",
+      "min": 50,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 25,
+      "showTrapBadgeDuringExam": false
+    },
+    "5": {
+      "id": 5,
+      "title": "Roulements & Analyse spectrale",
+      "desc": "Fréquences cinématiques, stades de dégradation, enveloppe, PeakVue, SPM, kurtosis, faux brinelling & fluting",
+      "min": 60,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 30,
+      "showTrapBadgeDuringExam": false
+    },
+    "6": {
+      "id": 6,
+      "title": "Engrenages, Pompes & Ventilateurs",
+      "desc": "GMF, dent de chasse, BPF, cavitation, recirculation & courroies",
+      "min": 55,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 30,
+      "showTrapBadgeDuringExam": false
+    },
+    "7": {
+      "id": 7,
+      "title": "Résonance, Vitesse critique & Analyse de phase",
+      "desc": "Bode, Nyquist, bump test, résonance directionnelle, TMD, oil whirl & oil whip",
+      "min": 60,
+      "passScore": 85,
+      "questionsPerExam": 10,
+      "shuffleQuestions": true,
+      "shuffleOptions": true,
+      "allowCalc": true,
+      "timeLimitMin": 30,
+      "showTrapBadgeDuringExam": false
+    }
+  },
+  "modules": [
+    {
+      "id": 1,
+      "title": "Stratégie de maintenance & Fondamentaux",
+      "desc": "Maintenance conditionnelle, grandeurs vibratoires, capteurs & pièges de mesure",
+      "min": 45,
+      "qs": [
+        {
+          "t": "Sur un moteur asynchrone 4 pôles alimenté en 50 Hz, la plaque signalétique indique 1475 tr/min. Quelle est la fréquence de rotation fondamentale 1x à positionner sur le spectre ?",
+          "type": "single",
+          "o": [
+            "25,00 Hz (vitesse synchrone 1500 tr/min)",
+            "24,58 Hz (vitesse réelle asynchrone avec glissement)",
+            "50,00 Hz (fréquence du réseau électrique)",
+            "12,50 Hz (sous-harmonique)"
+          ],
+          "a": 1,
+          "e": "PIÈGE CLASSIQUE : ne pas confondre vitesse synchrone (1500 tr/min = 25 Hz) et vitesse réelle sous charge (1475 / 60 = 24,58 Hz). Un curseur calé sur 25 Hz tombe à côté du pic 1x et fausse toute l'identification des harmoniques et des fréquences cinématiques.",
+          "isTrap": true,
+          "trapWarning": "Prenez toujours la vitesse réelle mesurée (tachymètre / plaque) divisée par 60, jamais la vitesse synchrone théorique.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "freq",
+          "pre": {
+            "rpm": 1475
+          }
+        },
+        {
+          "t": "Lors de la surveillance vibratoire de routine selon l'ISO 18436-2 (Niveau 1), dans quelles directions de mesure standardisées le capteur accéléromètre doit-il être orienté sur chaque palier d'une machine horizontale ?",
+          "type": "single",
+          "o": [
+            "Radial Horizontal (H), Radial Vertical (V), et Axial (A)",
+            "Uniquement Radial Vertical, car le poids du rotor concentre toutes les vibrations",
+            "Uniquement Axial, car les anomalies mécaniques s'y propagent en premier",
+            "Deux diagonales orientées à 45° par rapport à l'embase"
+          ],
+          "a": 0,
+          "e": "Sur un palier horizontal en Niveau 1, la norme exige 3 directions orthogonales : Radial Horizontal (généralement la direction la plus flexible de la machine), Radial Vertical (direction d'appui sur le bâti) et Axial (parallèle à l'axe de rotation, indispensable pour évaluer le comportement axial global).",
+          "isTrap": true,
+          "trapWarning": "Ne vous fiez jamais à une seule direction : une vibration peut être très modeste en vertical et très élevée en horizontal ou en axial.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "conv"
+        },
+        {
+          "t": "Une vibration sinusoïdale pure de 5,0 mm/s RMS est mesurée sur un palier à la fréquence de 25 Hz. Quelle est l'amplitude du déplacement correspondant en µm crête-à-crête (Pk-Pk) ?",
+          "type": "num",
+          "a": 90,
+          "tol": 2,
+          "unit": "µm Pk-Pk",
+          "e": "D_RMS = V_RMS / (2πf) = 5 / (2π × 25) = 0,0318 mm = 31,8 µm RMS. Pour une sinusoïde pure : Pk-Pk = RMS × 2√2 = 31,8 × 2,828 = 90,0 µm. Répondre 31,8 µm revient à oublier la conversion de détection RMS → Pk-Pk.",
+          "isTrap": true,
+          "trapWarning": "Convertissez D'ABORD la grandeur physique (intégration ÷ 2πf), PUIS le mode de détection (RMS → 0-Pk ×√2 → Pk-Pk ×2). Ne mélangez jamais les deux étapes.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "conv",
+          "pre": {
+            "f": 25,
+            "v": 5
+          }
+        },
+        {
+          "t": "Une composante vibratoire harmonique mesurée à 1000 Hz sur un palier présente une vitesse de 4,0 mm/s RMS. Quelle est l'accélération correspondante en g RMS (g = 9,81 m/s²) ?",
+          "type": "num",
+          "a": 2.56,
+          "tol": 0.05,
+          "unit": "g RMS",
+          "e": "A = 2πf × V = 2π × 1000 × 4 mm/s = 25 133 mm/s² = 25,13 m/s² → 25,13 / 9,81 = 2,56 g RMS. À haute fréquence, une vitesse modeste correspond à une accélération importante.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "mineure",
+          "tool": "conv",
+          "pre": {
+            "f": 1000,
+            "v": 4
+          }
+        },
+        {
+          "t": "Pour surveiller un équipement tournant présentant des composantes vibratoires à très haute fréquence (6000 Hz), quelle grandeur physique est la plus pertinente ?",
+          "type": "single",
+          "o": [
+            "Le déplacement en µm Pk-Pk",
+            "La vitesse en mm/s RMS sur 10-1000 Hz",
+            "L'accélération en g (ou m/s²)",
+            "La vitesse en mm/s 0-Pk sur 2-1000 Hz"
+          ],
+          "a": 2,
+          "e": "Le déplacement privilégie les très basses fréquences (< 10 Hz), la vitesse la plage médiane 10 Hz - 1000 Hz (énergie de fatigue ISO), et l'accélération les hautes fréquences (> 1000 Hz : chocs, frottements). À 6 kHz, un déplacement est de l'ordre du nanomètre et la vitesse standard ignore totalement le phénomène.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Une machine lente tourne à 120 tr/min (2 Hz). Le technicien mesure la vibration fondamentale 1x avec un accéléromètre standard et conclut, au vu d'un pic de 0,002 g, que la machine ne vibre pas. Quelle est l'analyse correcte ?",
+          "type": "single",
+          "o": [
+            "La conclusion est juste : 0,002 g est une valeur négligeable",
+            "À 2 Hz, l'accélération écrase les basses fréquences : 0,002 g correspond en réalité à ≈ 1,56 mm/s RMS (soit ≈ 124 µm RMS de déplacement), niveau non négligeable",
+            "Il faut simplement augmenter la gamme de mesure de l'accéléromètre à 50 g",
+            "La mesure est impossible car aucun capteur ne fonctionne sous 10 Hz"
+          ],
+          "a": 1,
+          "e": "V = A / (2πf) = (0,002 × 9,81) / (2π × 2) = 0,01962 / 12,566 = 1,56 mm/s ; D = V / (2πf) ≈ 124 µm. Une accélération minuscule en g masque un déplacement important à basse vitesse. Il faut toujours convertir en vitesse ou déplacement sur les machines lentes.",
+          "isTrap": true,
+          "trapWarning": "Sur machine lente, une accélération faible ne prouve rien : convertissez en vitesse ou en déplacement et vérifiez la réponse basse fréquence du capteur.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "conv",
+          "pre": {
+            "f": 2,
+            "a_g": 0.002
+          }
+        },
+        {
+          "t": "Un signal sinusoïdal pur affiche 7,07 mm/s RMS. Quelle valeur crête-à-crête (Pk-Pk) en mm/s doit indiquer un collecteur réglé en détection Pk-Pk ?",
+          "type": "num",
+          "a": 20,
+          "tol": 0.2,
+          "unit": "mm/s Pk-Pk",
+          "e": "Pour une sinusoïde : 0-Pk = RMS × √2 = 10,0 mm/s ; Pk-Pk = 2 × 0-Pk = 20,0 mm/s. Comparer une valeur Pk-Pk à un seuil ISO exprimé en RMS revient à surestimer la sévérité d'un facteur 2,83.",
+          "isTrap": true,
+          "trapWarning": "Vérifiez TOUJOURS le mode de détection (RMS, 0-Pk, Pk-Pk, « Peak calculé ») avant de comparer à une norme ou à un historique.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "conv"
+        },
+        {
+          "t": "Un signal temporel d'accélération présente une crête de 12 g pour une valeur efficace de 2 g. Que vaut le facteur de crête et qu'indique-t-il ?",
+          "type": "single",
+          "o": [
+            "1,41 : signal sinusoïdal régulier sans aucun choc",
+            "3 : signal aléatoire gaussien stationnaire",
+            "6 : présence de chocs impulsifs intermittents dans le signal temporel",
+            "24 : erreur de saturation du capteur"
+          ],
+          "a": 2,
+          "e": "CF = Crête / RMS = 12 / 2 = 6. Une sinusoïde pure a CF = 1,414, un bruit aléatoire environ 3. Un CF > 5 traduit des impacts et chocs répétitifs dans le signal temporel.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "Lors de la surveillance temporelle d'une machine, le facteur de crête (Crête / RMS) évolue ainsi : 3,2 → 5,8 → 7,1 → 4,0, tandis que la valeur RMS globale passe continuellement de 0,5 g à 3,8 g. Quelle est l'interprétation correcte ?",
+          "type": "single",
+          "o": [
+            "La machine s'est stabilisée et l'anomalie s'est atténuée",
+            "Rodage terminé, retour à la normale",
+            "Dégradation avancée : les chocs se multiplient et élèvent la valeur efficace RMS (au dénominateur), ce qui fait mécaniquement chuter le facteur de crête en phase terminale",
+            "Erreur de capteur : le facteur de crête ne peut jamais diminuer"
+          ],
+          "a": 2,
+          "e": "PIÈGE DU FACTEUR DE CRÊTE : Au début d'un défaut impulsionnel, quelques chocs isolés font monter la valeur crête sans modifier le RMS, donc le rapport Crête / RMS monte. Au stade terminal, les chocs deviennent continus et la valeur RMS globale augmente massivement : le facteur de crête diminue alors que la machine approche de la panne. Il faut toujours corréler le facteur de crête avec la tendance globale RMS.",
+          "isTrap": true,
+          "trapWarning": "Une baisse du facteur de crête accompagnée d'une hausse du RMS n'est JAMAIS une amélioration : c'est la signature d'un défaut généralisé.",
+          "difficulty": "piege",
+          "gravity": "critique"
+        },
+        {
+          "t": "Un mode de défaillance présente un intervalle P-F estimé à 90 jours. Quel intervalle de mesure est cohérent avec la règle usuelle de la maintenance conditionnelle ?",
+          "type": "single",
+          "o": [
+            "Tous les 90 jours (égal au P-F)",
+            "Tous les 120 jours",
+            "Entre 30 et 45 jours (P-F/3 à P-F/2)",
+            "Une fois par an lors de l'arrêt technique"
+          ],
+          "a": 2,
+          "e": "L'intervalle d'inspection doit être une fraction de l'intervalle P-F (typiquement P-F/2, idéalement P-F/3) pour garantir au moins une détection après le point P ET laisser le temps de planifier l'intervention avant F. Un intervalle égal au P-F laisse passer la défaillance.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Un technicien effectue une mesure de vibration à haute fréquence (bande 5 à 10 kHz) en appliquant une pointe de touche manuelle tenue à la main au lieu d'une embase vissée. Pourquoi cette mesure n'a-t-elle aucune valeur technique ?",
+          "type": "single",
+          "o": [
+            "La pointe de touche sature au-delà de 2 g",
+            "La pointe de touche manuelle crée une résonance de montage très basse (~1 kHz) qui amortit et coupe totalement les composantes à haute fréquence",
+            "La pointe de touche inverse la phase du signal",
+            "La pointe de touche ne fonctionne qu'en déplacement"
+          ],
+          "a": 1,
+          "e": "La réponse en fréquence utilisable dépend directement de la rigidité du montage : goujon vissé (> 10 kHz) > embase collée > aimant plat (quelques kHz) > pointe de touche manuelle (< 1,5 kHz). Une mesure haute fréquence effectuée avec une pointe de touche tenue manuellement amortit complètement les signaux HF et masque tout défaut naissant.",
+          "isTrap": true,
+          "trapWarning": "Le montage du capteur fixe la fréquence maximale exploitable. Pas de mesure HF (enveloppe, PeakVue, SPM) sans montage rigide.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Classez les modes de fixation d'un accéléromètre du plus large au plus étroit en réponse fréquentielle utilisable.",
+          "type": "single",
+          "o": [
+            "Pointe de touche > aimant bipolaire > embase collée > goujon vissé",
+            "Goujon vissé > embase collée > aimant bipolaire > pointe de touche",
+            "Aimant bipolaire > goujon vissé > pointe de touche > embase collée",
+            "Embase collée > pointe de touche > goujon vissé > aimant bipolaire"
+          ],
+          "a": 1,
+          "e": "Plus la liaison est rigide et légère, plus la résonance de montage est haute. Le goujon vissé sur surface dressée (avec graisse de couplage) offre la meilleure réponse ; la pointe de touche, la plus mauvaise.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Sur une machine lourde, l'accéléromètre fixé sur le carter mesure 1,2 mm/s RMS, alors que les sondes de proximité mesurant la vibration relative d'arbre indiquent 95 µm Pk-Pk pour un jeu interne de 200 µm. Quelle conclusion s'impose ?",
+          "type": "single",
+          "o": [
+            "Machine saine : le carter externe vibre très peu",
+            "Les sondes sont défectueuses puisqu'elles contredisent l'accéléromètre",
+            "Situation sérieuse : l'arbre consomme près de 50 % de son jeu interne ; la masse importante du carter atténue la transmission, seule la mesure relative d'arbre est représentative",
+            "Il suffit de remplacer l'accéléromètre par un modèle plus lourd"
+          ],
+          "a": 2,
+          "e": "Sur les machines à carter massif, l'inertie du corps amortit la transmission des vibrations vers l'extérieur : la mesure absolue sur le carter sous-estime le mouvement interne. La mesure relative par sonde sans contact (eddy current) est la grandeur de référence.",
+          "isTrap": true,
+          "trapWarning": "Sur paliers lisses, une faible vibration de carter ne garantit RIEN : la référence est le déplacement relatif d'arbre rapporté au jeu.",
+          "difficulty": "piege",
+          "gravity": "critique"
+        },
+        {
+          "t": "Une sonde de proximité à courants de Foucault a une sensibilité de 7,87 V/mm (200 mV/mil). Le signal dynamique mesuré vaut 0,63 V crête-à-crête. Quel est le déplacement relatif d'arbre en µm Pk-Pk ?",
+          "type": "num",
+          "a": 80,
+          "tol": 1.5,
+          "unit": "µm Pk-Pk",
+          "e": "D = 0,63 V / 7,87 V/mm = 0,080 mm = 80 µm Pk-Pk. La tension continue (gap voltage) donne la position statique de l'arbre ; seule la tension alternative donne la vibration dynamique.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "conv"
+        },
+        {
+          "t": "Concernant les sondes de déplacement sans contact (courants de Foucault), quelles affirmations sont correctes ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Le signal de « slow roll » (faux-rond mécanique + électrique) mesuré à basse vitesse doit être soustrait vectoriellement des mesures à vitesse nominale",
+            "La tension d'entrefer continue (gap voltage) renseigne sur la position statique moyenne de l'arbre",
+            "Une sonde de proximité mesure la vibration absolue de l'arbre par rapport au sol",
+            "Une piste de mesure rayée ou magnétisée génère un faux signal cyclique (glitch) indépendant de la vibration mécanique réelle"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "La sonde mesure un déplacement RELATIF arbre/palier (pas absolu). Le faux-rond de basse vitesse (runout mécanique + électrique) et les rayures s'additionnent au signal et doivent être compensés pour ne pas fausser l'analyse.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative"
+        },
+        {
+          "t": "Après intégration d'un signal d'accélération en vitesse, le spectre présente une « pente de ski » : amplitudes très élevées de 0 à 3 Hz décroissant rapidement. La machine tourne à 1480 tr/min. Quelle est la bonne lecture ?",
+          "type": "single",
+          "o": [
+            "Défaut de structure basse fréquence grave",
+            "Desserrage immédiat de la machine",
+            "Artefact d'intégration (bruit basse fréquence amplifié par le facteur 1/2πf, stabilisation thermique du capteur) : à éliminer par un filtre passe-haut adapté",
+            "Erreur de polarité du câble"
+          ],
+          "a": 2,
+          "e": "L'intégration mathématique divise l'amplitude par 2πf : le moindre bruit ou dérive thermique très basse fréquence est amplifié exponentiellement près de 0 Hz. Ce phénomène de « ski slope » est un artefact de calcul à filtrer par un passe-haut adapté.",
+          "isTrap": true,
+          "trapWarning": "Une énergie énorme proche de 0 Hz sur un spectre intégré est presque toujours un artefact de mesure, pas un défaut machine.",
+          "difficulty": "piege",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Quelles conditions garantissent la répétabilité d'une tendance vibratoire en ronde de maintenance conditionnelle ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Même point de mesure repéré (pastille), même direction et même mode de fixation",
+            "Même condition de fonctionnement (vitesse, charge, température)",
+            "Changer de capteur à chaque ronde pour moyenner les erreurs",
+            "Mêmes réglages de mesure sur l'appareil (plage de fréquence, nombre de moyennes, type de détection)"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "Une tendance n'a de valeur que si seul l'état de la machine varie. Changer de capteur, de point, de fixation, de paramètres ou de condition de charge introduit des écarts pouvant dépasser 30 % et masquer (ou simuler) une dégradation.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Normes de sévérité ISO 10816-3 / ISO 20816-1",
+      "desc": "Groupes de machines, supports rigides/flexibles, zones A-D, seuils d'alarme et de déclenchement",
+      "min": 45,
+      "qs": [
+        {
+          "t": "Un moteur électrique de 250 kW possède une hauteur d'axe H = 355 mm. Dans quel groupe ISO 10816-3 doit-il être classé ?",
+          "type": "single",
+          "o": [
+            "Groupe 2 (15 à 300 kW)",
+            "Groupe 1 (grandes machines : > 300 kW OU machines électriques avec H ≥ 315 mm)",
+            "Groupe 3 (pompes > 15 kW à moteur séparé)",
+            "Groupe 4 (pompes à moteur intégré)"
+          ],
+          "a": 1,
+          "e": "PIÈGE : la puissance seule (250 kW) oriente vers le Groupe 2, mais pour les machines électriques le critère de hauteur d'axe H ≥ 315 mm classe la machine en Groupe 1. Les seuils sont alors plus larges (rigide : 2,3 / 4,5 / 7,1 mm/s).",
+          "isTrap": true,
+          "trapWarning": "Pour un moteur électrique, vérifiez TOUJOURS la hauteur d'axe en plus de la puissance : H ≥ 315 mm impose le Groupe 1.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "iso"
+        },
+        {
+          "t": "Selon la norme ISO 10816-3, comment classe-t-on le support d'une machine dont la vitesse de rotation est de 1490 tr/min (24,83 Hz), sachant que la première fréquence propre de résonance du système machine-support est déterminée à 28 Hz ?",
+          "type": "single",
+          "o": [
+            "Support rigide, car 28 Hz est supérieur à 24,83 Hz",
+            "Support flexible, car 28 Hz est inférieur à 1,25 × 24,83 Hz = 31,04 Hz",
+            "Support rigide, car la machine est ancrée sur un socle massif",
+            "Impossible à déterminer sans connaître la masse totale"
+          ],
+          "a": 1,
+          "e": "Selon ISO 10816-3, un support est qualifié de rigide si sa première fréquence propre dépasse d'au moins 25 % la vitesse de rotation principale : 1,25 × 24,83 = 31,04 Hz. Ici 28 Hz < 31,04 Hz → le support est classé FLEXIBLE. La classification repose sur un critère dynamique chiffré, pas sur l'aspect visuel de l'embase.",
+          "isTrap": true,
+          "trapWarning": "Pour être rigide selon l'ISO, la fréquence propre du support doit dépasser la vitesse de rotation d'au moins 25 % de marge de sécurité.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "iso",
+          "pre": {
+            "rpm": 1490
+          }
+        },
+        {
+          "t": "Pour une machine du Groupe 1 sur support rigide (limite B/C = 4,5 mm/s RMS), quel seuil d'ALARME opérationnel retient-on avec la règle 1,25 × limite B/C ?",
+          "type": "num",
+          "a": 5.63,
+          "tol": 0.05,
+          "unit": "mm/s RMS",
+          "e": "Alarme = 1,25 × 4,5 = 5,625 ≈ 5,63 mm/s RMS. ISO 10816-3 recommande en pratique : alarme = valeur de référence + 0,25 × limite B/C, sans dépasser 1,25 × B/C ; on utilise ici la valeur plafond.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "iso",
+          "pre": {
+            "group": 1,
+            "support": "rigide"
+          }
+        },
+        {
+          "t": "Pour une machine du Groupe 1 sur support flexible (limite C/D = 11,0 mm/s RMS), quel seuil de DÉCLENCHEMENT (arrêt) obtient-on avec la règle 1,25 × limite C/D ?",
+          "type": "num",
+          "a": 13.75,
+          "tol": 0.05,
+          "unit": "mm/s RMS",
+          "e": "Déclenchement = 1,25 × 11,0 = 13,75 mm/s RMS. Le seuil de trip ne doit normalement pas dépasser 1,25 × la limite C/D.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "urgence_arret",
+          "tool": "iso",
+          "pre": {
+            "group": 1,
+            "support": "flexible"
+          }
+        },
+        {
+          "t": "Une pompe du Groupe 4 (pompe à moteur intégré) sur support rigide mesure 5,2 mm/s RMS en bande ISO. Dans quelle zone se situe-t-elle ?",
+          "type": "single",
+          "o": [
+            "Zone A (< 1,4 mm/s)",
+            "Zone B (1,4 à 2,8 mm/s)",
+            "Zone C (2,8 à 4,5 mm/s)",
+            "Zone D (> 4,5 mm/s)"
+          ],
+          "a": 3,
+          "e": "Groupes 2 et 4, support rigide : A/B = 1,4 ; B/C = 2,8 ; C/D = 4,5 mm/s RMS. 5,2 mm/s > 4,5 → zone D : vibration susceptible de provoquer des dommages, action rapide requise.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "critique",
+          "tool": "iso",
+          "pre": {
+            "group": 4,
+            "support": "rigide",
+            "v": 5.2
+          }
+        },
+        {
+          "t": "Un alternateur de 2 MW (Groupe 1, support rigide) mesure 3,9 mm/s RMS. Dans quelle zone se trouve-t-il ?",
+          "type": "single",
+          "o": [
+            "Zone A",
+            "Zone B",
+            "Zone C",
+            "Zone D"
+          ],
+          "a": 1,
+          "e": "Groupe 1 rigide : A/B = 2,3 ; B/C = 4,5 ; C/D = 7,1 mm/s. 3,9 mm/s est en zone B : fonctionnement long terme sans restriction, suivi normal.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure",
+          "tool": "iso",
+          "pre": {
+            "group": 1,
+            "support": "rigide",
+            "v": 3.9
+          }
+        },
+        {
+          "t": "Un collecteur paramétré en détection « 0-Pk » affiche 6,0 mm/s sur un moteur du Groupe 1 rigide dont le signal est quasi sinusoïdal (1x dominant). Quelle zone ISO est la bonne ?",
+          "type": "single",
+          "o": [
+            "Zone D, car 6,0 > 4,5 mm/s",
+            "Zone C, car 6,0 est entre 4,5 et 7,1 mm/s",
+            "Zone B, car 6,0 / √2 = 4,24 mm/s RMS",
+            "Zone A, car la valeur est en crête"
+          ],
+          "a": 2,
+          "e": "Les seuils ISO 10816-3 sont exprimés en mm/s RMS. Pour une sinusoïde : RMS = 0-Pk / √2 = 4,24 mm/s → zone B. Comparer directement la valeur crête au seuil RMS conduit à un arrêt injustifié.",
+          "isTrap": true,
+          "trapWarning": "Les zones ISO sont en RMS. Contrôlez le mode de détection de l'instrument avant toute comparaison.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "iso",
+          "pre": {
+            "group": 1,
+            "support": "rigide"
+          }
+        },
+        {
+          "t": "Une machine tourne à 400 tr/min (6,67 Hz). Le collecteur utilise le filtre standard ISO 10-1000 Hz et affiche un niveau global de 1,1 mm/s RMS (zone A). Que faut-il corriger ?",
+          "type": "single",
+          "o": [
+            "Rien : la machine est officiellement en zone A d'excellence",
+            "Pour les vitesses de 120 à 600 tr/min, la bande de mesure ISO doit être élargie à 2-1000 Hz : le filtre passe-haut standard à 10 Hz coupe la composante fondamentale à 6,67 Hz et sous-estime lourdement la sévérité",
+            "Passer en mesure de crête uniquement",
+            "Réduire la bande de mesure à 10-500 Hz"
+          ],
+          "a": 1,
+          "e": "ISO 10816-3 prévoit une bande 10-1000 Hz pour les vitesses > 600 tr/min et 2-1000 Hz pour 120-600 tr/min. Le passe-haut standard à 10 Hz atténue fortement toute vibration sous 10 Hz : la vibration principale de rotation est ignorée du calcul global.",
+          "isTrap": true,
+          "trapWarning": "Sur une machine lente (< 600 tr/min), un passe-haut à 10 Hz masque le 1x : utilisez 2 Hz.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "iso",
+          "pre": {
+            "rpm": 400
+          }
+        },
+        {
+          "t": "Une machine tournante émet un sifflement aigu à haute fréquence (2400 Hz). La valeur globale mesurée selon ISO 10816-3 (bande 10-1000 Hz) est stable à 2,0 mm/s RMS (zone A/B). Quelle est la bonne démarche ?",
+          "type": "single",
+          "o": [
+            "Se fier au global ISO : 2,0 mm/s étant en zone A/B, il n'y a aucun risque",
+            "La norme ISO 10816-3 filtre de 10 à 1000 Hz et est totalement aveugle au-delà de 1000 Hz : il faut effectuer une mesure large bande ou accélération pour évaluer le phénomène",
+            "Arrêter la machine en urgence sans autre vérification",
+            "Diviser le seuil ISO par 2 car le sifflement est aigu"
+          ],
+          "a": 1,
+          "e": "PIÈGE DE BANDE PASSANTE ISO : La norme ISO 10816-3 standardise la mesure en vitesse sur 10-1000 Hz. Tout phénomène situé au-dessus de 1 kHz (bruits stridents, composantes HF, micro-chocs) est totalement filtré. Une machine peut être en zone A selon l'ISO globale tout en subissant une anomalie sévère à haute fréquence.",
+          "isTrap": true,
+          "trapWarning": "Un global ISO conforme ne dit rien des engrènements et roulements au-delà de 1000 Hz.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "iso"
+        },
+        {
+          "t": "Un ventilateur du Groupe 2 rigide (B/C = 2,8 mm/s) était stable à 1,5 mm/s RMS depuis un an. Il mesure soudainement 2,7 mm/s RMS, toujours en zone B. Que dit le critère d'évolution d'ISO 10816 / 20816 ?",
+          "type": "single",
+          "o": [
+            "Aucune action : la machine reste en zone B",
+            "Changement significatif : la variation (1,2 mm/s) dépasse 25 % de la limite B/C (0,70 mm/s) ; il faut investiguer même si la zone B n'est pas quittée",
+            "Il faut attendre d'atteindre la zone C",
+            "La variation n'est significative qu'au-delà de 100 %"
+          ],
+          "a": 1,
+          "e": "Critère II d'ISO 10816 : une augmentation de niveau supérieure à 25 % de la limite de zone B/C est considérée comme significative et requiert une investigation, même si la machine reste dans la zone B (ici 0,25 × 2,8 = 0,70 mm/s < 1,2 mm/s d'augmentation).",
+          "isTrap": true,
+          "trapWarning": "La zone ISO n'est qu'un des deux critères : un saut de plus de 25 % de la limite B/C impose une investigation, même en zone B.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "iso",
+          "pre": {
+            "group": 2,
+            "support": "rigide"
+          }
+        },
+        {
+          "t": "Quelle est la limite de zone C/D (mm/s RMS) pour une machine du Groupe 2 sur support flexible ?",
+          "type": "num",
+          "a": 7.1,
+          "tol": 0.05,
+          "unit": "mm/s RMS",
+          "e": "Groupes 2 et 4, support flexible : A/B = 2,3 ; B/C = 4,5 ; C/D = 7,1 mm/s RMS.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "critique",
+          "tool": "iso",
+          "pre": {
+            "group": 2,
+            "support": "flexible"
+          }
+        },
+        {
+          "t": "Selon ISO 10816-3, dans quelle zone se situent normalement les machines neuves après mise en service ?",
+          "type": "single",
+          "o": [
+            "Zone A",
+            "Zone B",
+            "Zone C",
+            "N'importe quelle zone tant que D n'est pas atteinte"
+          ],
+          "a": 0,
+          "e": "La zone A correspond aux machines neuves ou remises en état après révision. Une machine neuve réceptionnée en zone B ou C indique un problème de montage, de supportage ou de conformité d'usine.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure",
+          "tool": "iso"
+        },
+        {
+          "t": "Pour évaluer la sévérité ISO d'un ventilateur, un technicien colle son capteur sur la tôle de la volute au milieu d'un panneau. Pourquoi la mesure n'est-elle pas valable ?",
+          "type": "single",
+          "o": [
+            "La tôle est trop chaude",
+            "La norme impose des mesures sur les paliers ou supports de paliers ; une tôle mince présente ses propres résonances locales et ne représente pas les efforts transmis aux paliers",
+            "La norme impose une mesure uniquement axiale",
+            "Les ventilateurs sont exclus de la norme"
+          ],
+          "a": 1,
+          "e": "ISO 10816-3 spécifie des mesures sur paliers, supports de paliers ou carters rigides, dans deux directions radiales orthogonales (et axiale si pertinent). Un panneau de tôle vibre en « tambour » et donne des niveaux sans rapport avec l'état de la machine.",
+          "isTrap": true,
+          "trapWarning": "Ne mesurez jamais la sévérité ISO sur un carénage ou une tôle : toujours au plus près du palier, sur une partie rigide.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "iso"
+        },
+        {
+          "t": "Concernant le domaine d'application d'ISO 10816-3, quelles affirmations sont correctes ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Elle couvre des machines de 15 kW à 50 MW",
+            "Elle couvre des vitesses de 120 à 15 000 tr/min",
+            "Elle s'applique aux machines alternatives (compresseurs à pistons)",
+            "Le critère d'évaluation principal est la vitesse vibratoire efficace en large bande mesurée sur les parties non tournantes"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "Les machines alternatives relèvent d'ISO 10816-6 (ISO 20816-8 pour les compresseurs alternatifs). ISO 10816-3 concerne les machines industrielles de 15 kW à 50 MW, 120-15 000 tr/min, évaluées en vitesse RMS large bande (et éventuellement déplacement à basse vitesse).",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "mineure",
+          "tool": "iso"
+        },
+        {
+          "t": "Un moteur du Groupe 2 rigide mesure 1,2 mm/s RMS (zone A d'ISO 10816-3), mais l'opérateur perçoit un claquement cyclique périodique sur le palier. Pourquoi une anomalie mécanique peut-elle coexister avec une zone A ISO ?",
+          "type": "single",
+          "o": [
+            "C'est impossible : la zone A garantit l'absence totale de tout défaut",
+            "Aux premiers stades d'une avarie locale, les chocs très brefs contiennent très peu d'énergie globale en vitesse 10-1000 Hz : la valeur globale RMS reste excellente (zone A) malgré l'avarie",
+            "L'opérateur s'est trompé de machine",
+            "La norme ISO 10816-3 ne s'applique pas aux moteurs électriques"
+          ],
+          "a": 1,
+          "e": "LIMITE DE LA VITESSE GLOBALE RMS : La vitesse efficace RMS sur 10-1000 Hz quantifie l'énergie de vibration globale destructrice pour le bâti. Un défaut mécanique débutant produit des chocs très courts de très faible énergie globale : le global RMS reste en zone A (vert) alors que le composant est déjà dégradé.",
+          "isTrap": true,
+          "trapWarning": "Zone ISO A ≠ roulements sains : la norme de sévérité globale est aveugle aux défauts HF naissants.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "brg"
+        },
+        {
+          "t": "Une pompe centrifuge multicellulaire de 90 kW, entraînée par un moteur séparé par accouplement, doit être classée. Quel groupe ISO 10816-3 s'applique ?",
+          "type": "single",
+          "o": [
+            "Groupe 1",
+            "Groupe 2",
+            "Groupe 3 : pompes à roue multi-aubes avec entraînement séparé, puissance > 15 kW",
+            "Groupe 4"
+          ],
+          "a": 2,
+          "e": "Le Groupe 3 regroupe les pompes à roue multi-aubes avec moteur séparé (> 15 kW) ; le Groupe 4 les mêmes pompes à moteur intégré. Les seuils en vitesse du Groupe 3 sont ceux du Groupe 1, ceux du Groupe 4 ceux du Groupe 2.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "mineure",
+          "tool": "iso"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Balourd & Équilibrage dynamique 1 plan",
+      "desc": "Signature 1x, calcul vectoriel, masse d'essai, porte-à-faux, faux-rond & arbre cintré",
+      "min": 60,
+      "qs": [
+        {
+          "t": "Un équilibrage 1 plan présente O = 4,0 mm/s @ 0° et T = 4,0 mm/s @ 90°. Quelle est l'amplitude du vecteur effet E = T − O ?",
+          "type": "num",
+          "a": 5.66,
+          "tol": 0.1,
+          "unit": "mm/s",
+          "e": "PIÈGE DE SOUSTRACTION SCALAIRE : ne faites jamais 4 − 4 = 0 ! Vectoriellement, E = (0 ; 4) − (4 ; 0) = (−4 ; 4) → |E| = √(4² + 4²) = √32 = 5,66 mm/s @ 135°.",
+          "isTrap": true,
+          "trapWarning": "Le calcul d'équilibrage est purement vectoriel. Soustraire les amplitudes arithmétiquement conduit à une grave erreur de correction.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "bal",
+          "pre": {
+            "O": [
+              4,
+              0
+            ],
+            "T": [
+              4,
+              90
+            ]
+          }
+        },
+        {
+          "t": "Une masse résiduelle de 20 g est située à un rayon de 250 mm sur un rotor tournant à 3000 tr/min. Quelle force centrifuge tournante génère-t-elle (en N) ?",
+          "type": "num",
+          "a": 493.5,
+          "tol": 5,
+          "unit": "N",
+          "e": "ω = 2π × 3000 / 60 = 314,16 rad/s. F = m·r·ω² = 0,020 × 0,250 × 314,16² = 493,5 N, soit environ 50 kg-force tournant à 50 Hz : une « petite » masse génère un effort considérable sur les paliers.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "bal"
+        },
+        {
+          "t": "Un rotor fonctionnant à 1500 tr/min est porté à 3000 tr/min. Par quel facteur la force centrifuge due au même balourd est-elle multipliée ?",
+          "type": "num",
+          "a": 4,
+          "tol": 0.01,
+          "unit": "×",
+          "e": "F = m·r·ω² : la force varie avec le CARRÉ de la vitesse. Doubler la vitesse multiplie la force par 4. Un balourd tolérable à basse vitesse peut devenir destructeur lors d'une augmentation de consigne du variateur.",
+          "isTrap": true,
+          "trapWarning": "La force de balourd n'est pas proportionnelle à la vitesse mais à son carré.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "bal"
+        },
+        {
+          "t": "Équilibrage 1 plan : O = 6,0 mm/s @ 40°, masse d'essai Mt = 10 g @ 0°, mesure avec masse d'essai T = 3,5 mm/s @ 100°. Quelle est la masse de correction |W| (masse d'essai retirée) ?",
+          "type": "num",
+          "a": 11.49,
+          "tol": 0.2,
+          "unit": "g",
+          "e": "O = (4,596 ; 3,857) ; T = (−0,608 ; 3,447). E = T − O = (−5,204 ; −0,410) → |E| = 5,22 mm/s @ 184,5°. α = E / Mt = 0,522 mm/s/g @ 184,5°. W = −O / α = (6,0 @ 220°) / (0,522 @ 184,5°) = 11,49 g @ 35,5°. Effet de l'essai : |E|/|O| = 87 % (> 30 %), essai valide.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "critique",
+          "tool": "bal",
+          "pre": {
+            "O": [
+              6,
+              40
+            ],
+            "T": [
+              3.5,
+              100
+            ],
+            "Mt": [
+              10,
+              0
+            ]
+          }
+        },
+        {
+          "t": "Avec les mêmes données (O = 6,0 mm/s @ 40°, Mt = 10 g @ 0°, T = 3,5 mm/s @ 100°), à quelle position angulaire (en degrés, même référentiel que la masse d'essai) faut-il placer la masse de correction ?",
+          "type": "num",
+          "a": 35.5,
+          "tol": 2,
+          "unit": "°",
+          "e": "Angle(W) = angle(−O) − angle(α) = (40° + 180°) − 184,5° = 35,5°. La masse de correction se place à 35,5° dans le sens de repérage utilisé pour la masse d'essai. Inverser le sens de comptage angulaire est l'erreur la plus fréquente sur le terrain.",
+          "isTrap": true,
+          "trapWarning": "Le sens de comptage des angles (sens de rotation ou inverse) doit être IDENTIQUE pour la mesure de phase et le positionnement des masses.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "bal",
+          "pre": {
+            "O": [
+              6,
+              40
+            ],
+            "T": [
+              3.5,
+              100
+            ],
+            "Mt": [
+              10,
+              0
+            ]
+          }
+        },
+        {
+          "t": "Équilibrage : O = 8,0 mm/s @ 0°, masse d'essai 20 g @ 0°, T = 5,0 mm/s @ 0°. Quelle masse de correction TOTALE faut-il placer à 0° si la masse d'essai est retirée ?",
+          "type": "num",
+          "a": 53.3,
+          "tol": 0.5,
+          "unit": "g",
+          "e": "E = T − O = −3,0 @ 0° = 3,0 @ 180°. α = 3,0 / 20 = 0,15 mm/s/g @ 180°. W = −O / α = (8,0 @ 180°) / (0,15 @ 180°) = 53,3 g @ 0°. Même phase et amplitude réduite : la masse d'essai était bien placée mais trop légère. Si elle est laissée en place, il faut ajouter 33,3 g au même endroit.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "bal",
+          "pre": {
+            "O": [
+              8,
+              0
+            ],
+            "T": [
+              5,
+              0
+            ],
+            "Mt": [
+              20,
+              0
+            ]
+          }
+        },
+        {
+          "t": "Lors d'un essai, l'ajout de la masse d'essai fait passer la vibration de 6,0 mm/s @ 120° à 5,7 mm/s @ 128°. Que faut-il faire ?",
+          "type": "single",
+          "o": [
+            "Calculer la correction : toute variation suffit",
+            "Recommencer avec une masse d'essai plus lourde ou un rayon plus grand : l'effet est inférieur à la règle industrielle des 30 % (amplitude ou phase)",
+            "Placer la masse d'essai à l'opposé et conclure",
+            "Conclure que le rotor n'est pas équilibrable"
+          ],
+          "a": 1,
+          "e": "|E| = |5,7@128° − 6,0@120°| ≈ 0,87 mm/s, soit ~14 % de O, et la phase n'a varié que de 8°. Avec un effet aussi faible, le calcul est noyé dans la dispersion de mesure. Règle terrain : viser ≥ 30 % de variation d'amplitude OU ≥ 30° de variation de phase.",
+          "isTrap": true,
+          "trapWarning": "Un effet de masse d'essai trop faible donne une correction aléatoire. Visez au moins 30 % d'effet.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "bal"
+        },
+        {
+          "t": "Selon ISO 21940-11 (ex-ISO 1940-1), quel est le balourd résiduel admissible total pour un rotor de 200 kg tournant à 1500 tr/min en classe G6,3 (Uper = 9549 × G × M / n) ?",
+          "type": "num",
+          "a": 8021,
+          "tol": 60,
+          "unit": "g·mm",
+          "e": "Uper = 9549 × 6,3 × 200 / 1500 = 8021 g·mm. Pour un rotor symétrique équilibré en 2 plans, on répartit environ la moitié par plan (≈ 4010 g·mm). À un rayon de 400 mm, cela représente ≈ 20 g au total.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "mineure",
+          "tool": "bal"
+        },
+        {
+          "t": "La masse de correction calculée est 10 g @ 15°, mais le rotor ne dispose de trous de fixation que tous les 30° (0°, 30°, 60°...). Quelle masse placer au trou 0° (une masse identique étant placée à 30°) ?",
+          "type": "num",
+          "a": 5.18,
+          "tol": 0.05,
+          "unit": "g",
+          "e": "Décomposition vectorielle : W(0°) = W × sin(30° − 15°) / sin(30°) = 10 × 0,2588 / 0,5 = 5,18 g ; idem pour W(30°). La somme arithmétique (10,35 g) dépasse 10 g, car les deux masses ne sont pas colinéaires.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "mineure",
+          "tool": "bal"
+        },
+        {
+          "t": "Quelles conditions doivent être vérifiées AVANT de lancer un équilibrage dynamique sur site ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Le pic 1x est dominant dans le spectre et la phase 1x est stable et répétable",
+            "Le rotor est propre (aucun encrassement ni dépôt de matière) et sans pièce manquante",
+            "Le déphasage entre direction horizontale et verticale sur le palier est de 0°",
+            "La fixation du rotor, l'état mécanique et la stabilité en vitesse ont été validés"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "Pour un balourd mécanique vrai, la force centrifuge tournante génère une phase stable et un déphasage théorique proche de 90° entre horizontal et vertical sur un palier isotrope. Tenter d'équilibrer un rotor encrassé ou avec une phase instable est voué à l'échec.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "bal"
+        },
+        {
+          "t": "Sur un palier à rigidité isotrope, une vibration 1x importante est mesurée. Quelle relation d'amplitude et de déphasage entre les directions radiale horizontale et radiale verticale caractérise un balourd mécanique pur ?",
+          "type": "single",
+          "o": [
+            "Amplitudes d'ordre de grandeur comparable et déphasage proche de 90° (force centrifuge tournante)",
+            "Amplitude horizontale 10 fois plus forte que la verticale et déphasage de 0°",
+            "Vibration uniquement présente dans la direction axiale",
+            "Déphasage fluctuant constamment entre 0° et 360°"
+          ],
+          "a": 0,
+          "e": "Le balourd mécanique produit une force centrifuge tournante d'amplitude constante : dans un plan radial isotrope, la vibration horizontale et verticale ont des amplitudes très proches et présentent un déphasage d'environ 90°. Un déphasage de 0° ou 180° traduit une directionnalité anormale de raideur ou un défaut non rotatif.",
+          "isTrap": true,
+          "trapWarning": "Vérifiez la quadrature de phase H/V (≈ 90°) avant tout équilibrage : un 1x directionnel n'est pas un balourd.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "bal"
+        },
+        {
+          "t": "Un ventilateur à rotor en porte-à-faux (roue montée en bout d'arbre au-delà des deux paliers) présente une vibration 1x très élevée à la fois en direction RADIALE et en direction AXIALE. Comment s'explique cette composante axiale 1x ?",
+          "type": "single",
+          "o": [
+            "C'est impossible : un balourd ne peut jamais produire de vibration axiale",
+            "Le balourd de la roue en porte-à-faux crée un couple dynamique de basculement qui fléchit l'arbre et génère une composante 1x axiale en phase sur les deux paliers",
+            "La roue a glissé axialement contre le châssis",
+            "La force centrifuge s'annule en porte-à-faux"
+          ],
+          "a": 1,
+          "e": "Sur un rotor en porte-à-faux, le centre de gravité de la roue est décalé par rapport à l'entre-axe des paliers. La force centrifuge du balourd engendre un moment dynamique de basculement qui produit une vibration axiale à 1x d'amplitude élevée, en phase sur les paliers.",
+          "isTrap": true,
+          "trapWarning": "Un 1x axial élevé n'est pas automatiquement un désalignement : sur rotor en porte-à-faux, c'est souvent le balourd. Seule la phase tranche.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "bal"
+        },
+        {
+          "t": "Sur un compresseur à paliers lisses, les sondes de proximité indiquent 28 µm Pk-Pk à 1x lors du « slow roll » à 300 tr/min, avec une phase stable. À vitesse nominale, le 1x vaut 45 µm. Un technicien veut corriger les 28 µm par des masselottes. Quelle est la bonne décision ?",
+          "type": "single",
+          "o": [
+            "Équilibrer : 28 µm est significatif",
+            "Ne JAMAIS équilibrer le slow roll : c'est un faux-rond (runout mécanique/électrique de la piste de mesure) sans force dynamique associée ; le soustraire vectoriellement et usiner ou traiter la piste si nécessaire",
+            "Augmenter la vitesse de slow roll",
+            "Remplacer les sondes"
+          ],
+          "a": 1,
+          "e": "À 300 tr/min, la force centrifuge est négligeable : un signal 1x à cette vitesse est du faux-rond (excentricité, rayure, magnétisme résiduel). Le « corriger » par des masses crée un vrai balourd : à vitesse nominale et à chaud, la vibration réelle augmente et peut conduire au frottement. On compense vectoriellement le vecteur de slow roll.",
+          "isTrap": true,
+          "trapWarning": "Un faux-rond (runout) ne se corrige JAMAIS avec des masselottes : vous créeriez un balourd réel destructeur à pleine vitesse.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "bal"
+        },
+        {
+          "t": "Une turbine à vapeur redémarrée à chaud après un arrêt court présente un 1x très élevé qui diminue progressivement sur 40 minutes à vitesse lente. Quelle est la cause et la conduite à tenir ?",
+          "type": "single",
+          "o": [
+            "Balourd massique définitif : ajouter immédiatement des masselottes de correction",
+            "Arbre cintré thermiquement (rotor bow) par refroidissement asymétrique : ne pas équilibrer, maintenir le virage lent jusqu'à homogénéisation thermique",
+            "Perte définitive d'une aube de turbine",
+            "Erreur de fixation de la masselotte d'essai"
+          ],
+          "a": 1,
+          "e": "À l'arrêt sans virage lent, le haut d'un rotor chaud refroidit moins vite que le bas : l'arbre se cintre thermiquement (thermal bow), créant un balourd géométrique temporaire. Ajouter des masses d'équilibrage dans cet état transitoire est une grave erreur, car le rotor sera déséquilibré une fois revenu à température homogène.",
+          "isTrap": true,
+          "trapWarning": "Un 1x qui varie avec le temps ou la température n'est pas un balourd massique stable : ne l'équilibrez pas.",
+          "difficulty": "piege",
+          "gravity": "urgence_arret",
+          "tool": "bal"
+        },
+        {
+          "t": "Sur un moteur asynchrone, un 1x radial de 6 mm/s chute instantanément à 0,8 mm/s à la coupure d'alimentation, avant que la vitesse ne commence à ralentir. Que conclure ?",
+          "type": "single",
+          "o": [
+            "Balourd mécanique massique classique : il faut équilibrer",
+            "Origine électromagnétique (excentricité d'entrefer, dissymétrie de flux) : la force disparaît instantanément avec le champ magnétique, l'équilibrage par masselottes est inutile",
+            "Le rotor s'est arrêté instantanément",
+            "L'inertie mécanique du rotor est nulle"
+          ],
+          "a": 1,
+          "e": "Un balourd mécanique est lié à la masse du rotor et à sa vitesse : il décroît lentement avec le ralentissement de la machine. Une chute instantanée dès la coupure électrique prouve que la force génératrice est magnétique (entrefer excentré, déséquilibre de tension).",
+          "isTrap": true,
+          "trapWarning": "Faites toujours le test de coupure d'alimentation : un 1x électrique ne s'équilibre pas.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Lors d'un équilibrage, la phase 1x mesurée à vitesse constante fluctue de ± 60° d'une acquisition à l'autre. Que faut-il faire ?",
+          "type": "single",
+          "o": [
+            "Moyenner les phases et équilibrer",
+            "Ne pas équilibrer : une phase instable indique une autre cause (jeu mécanique, battement entre deux machines voisines, vitesse instable, frottement) ou un problème de référence tachymétrique",
+            "Augmenter la masse d'essai",
+            "Passer en équilibrage 2 plans"
+          ],
+          "a": 1,
+          "e": "Un balourd vrai donne une phase stable et répétable (dispersion de quelques degrés). Une phase errante interdit tout calcul fiable : rechercher un battement (deux machines de vitesses voisines), un jeu, une mauvaise bande réfléchissante ou un capteur mal fixé.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "bal"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Lignage d'arbres & Défauts d'accouplement",
+      "desc": "Désalignement parallèle/angulaire, pied boîteux, dilatation thermique & tolérances",
+      "min": 50,
+      "qs": [
+        {
+          "t": "Le spectre radial d'une machine accouplée montre un pic à 2x très élevé (supérieur au 1x). Quelle vérification de phase est indispensable pour confirmer un désalignement d'arbres ?",
+          "type": "single",
+          "o": [
+            "Aucune : un pic à 2x élevé prouve le désalignement de façon certaine",
+            "Mesurer la phase relative axiale ou radiale à travers l'accouplement : une opposition de phase d'environ 180° confirme le désalignement",
+            "Mesurer la température de la peinture du carter",
+            "Changer le sens de rotation de la machine"
+          ],
+          "a": 1,
+          "e": "Un pic à 2x peut avoir d'autres origines (jeu mécanique, courroie, pied boîteux). Le discriminant physique de l'alignement est la comparaison de phase à travers l'accouplement : le désalignement impose une opposition de phase de 180° (± 30°) entre les paliers situés de part et d'autre du manchon.",
+          "isTrap": true,
+          "trapWarning": "Ne diagnostiquez jamais un désalignement sur le seul 2x : confirmez par la phase de 180° à travers l'accouplement.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Quelle signature vibratoire caractérise un désalignement ANGULAIRE ?",
+          "type": "single",
+          "o": [
+            "2x radial dominant, phase radiale à 0° à travers l'accouplement",
+            "1x (et 2x) axiaux élevés, avec un déphasage axial d'environ 180° à travers l'accouplement",
+            "Sous-harmoniques 0,5x",
+            "Bandes latérales à 2xLF autour du 1x"
+          ],
+          "a": 1,
+          "e": "Le désalignement angulaire génère un moment de flexion : forte composante axiale 1x (souvent avec 2x et 3x), déphasée d'environ 180° entre les paliers situés de part et d'autre de l'accouplement.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "significative"
+        },
+        {
+          "t": "Quelle signature caractérise un désalignement PARALLÈLE (offset) ?",
+          "type": "single",
+          "o": [
+            "1x axial dominant en phase",
+            "2x radial élevé (souvent > 1x), avec un déphasage radial d'environ 180° à travers l'accouplement",
+            "Pic à la fréquence de cage",
+            "Bruit large bande 2-10 kHz"
+          ],
+          "a": 1,
+          "e": "L'offset parallèle produit des efforts radiaux à 2 cycles par tour : 2x radial dominant, 1x éventuellement élevé, et phase radiale opposée (≈ 180°) de part et d'autre de l'accouplement.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "significative"
+        },
+        {
+          "t": "Lors de la vérification du pied boîteux, desserrer le boulon du pied arrière droit d'un moteur provoque une levée de 0,12 mm au comparateur. Quelle est la bonne décision ?",
+          "type": "single",
+          "o": [
+            "Serrer au double du couple pour forcer le pied contre l'embase",
+            "Pied boîteux avéré (dépasse 0,05 mm) : il faut corriger le calage sous ce pied avant de procéder à l'alignement d'arbres",
+            "Ignorer la mesure car 0,12 mm est sans conséquence",
+            "Desserrer tous les autres pieds sans caler"
+          ],
+          "a": 1,
+          "e": "Le pied boîteux (soft foot) déforme le carter au serrage : les mesures de lignage changent selon l'ordre de serrage, l'entrefer moteur devient inégal et les paliers d'arbres sont soumis à de fortes contraintes géométriques. Il se traite impérativement avant d'aligner, avec un critère standard ≤ 0,05 mm.",
+          "isTrap": true,
+          "trapWarning": "Ne lancez jamais un lignage laser sans avoir contrôlé et corrigé le pied boîteux : les résultats ne seront pas reproductibles.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Quels types de pied boîteux faut-il savoir identifier ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Pied boîteux parallèle (pied court, à caler)",
+            "Pied boîteux angulaire (pied ou semelle vrillée)",
+            "Pied boîteux induit par des contraintes externes (tuyauterie, conduits)",
+            "Pied boîteux corrigé automatiquement par un accouplement élastique"
+          ],
+          "a": [
+            0,
+            1,
+            2
+          ],
+          "e": "On distingue le pied parallèle (cale manquante), le pied angulaire (contact sur une arête : cale biseautée ou usinage), le pied induit (tuyauterie qui tire la machine) et le « squishy foot » (trop de cales empilées). Aucun accouplement ne corrige une déformation du carter.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Un technicien affirme : « Avec un accouplement élastique à plots, un désalignement de 0,4 mm est sans conséquence puisque l'accouplement l'absorbe. » Qu'en est-il ?",
+          "type": "single",
+          "o": [
+            "C'est vrai : les plots élastomères éliminent tout effort sur la ligne d'arbre",
+            "Faux : l'accouplement tolère le désalignement sans se rompre immédiatement, mais transmet des efforts cycliques de flexion alternée aux arbres et aux paliers, réduisant fortement leur durée de vie",
+            "C'est vrai uniquement sur les petites machines",
+            "C'est vrai si l'accouplement a été graissé"
+          ],
+          "a": 1,
+          "e": "La tolérance de désalignement d'un catalogue d'accouplement concerne la survie de l'accouplement, pas celle des machines. Chaque tour, l'élément élastique se déforme et renvoie des efforts alternés (1x, 2x) aux paliers ; il chauffe et se dégrade. Le lignage doit respecter les tolérances machines, pas celles de l'accouplement.",
+          "isTrap": true,
+          "trapWarning": "Le mythe de l'accouplement élastique : il « absorbe » le déplacement mais transmet les efforts. Les tolérances de lignage dépendent de la vitesse, pas du type d'accouplement.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "La ligne d'axe d'une pompe est à 400 mm au-dessus de ses pattes. En service, le corps s'échauffe de 60 °C par rapport à l'état d'alignement. Avec α = 12 × 10⁻⁶ /°C, quelle est la dilatation verticale de l'axe (en mm) ?",
+          "type": "num",
+          "a": 0.288,
+          "tol": 0.005,
+          "unit": "mm",
+          "e": "ΔL = α × L × ΔT = 12 × 10⁻⁶ × 400 × 60 = 0,288 mm. Cet écart dépasse à lui seul la tolérance d'offset à 3000 tr/min : il faut aligner à froid avec des cibles (offsets) thermiques.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "En fonctionnement, l'axe d'une pompe s'élève de 0,29 mm et celui de son moteur de 0,10 mm. Pour obtenir des axes alignés à chaud, de combien (en mm) l'axe du moteur doit-il être positionné AU-DESSUS de celui de la pompe lors du lignage à froid ?",
+          "type": "num",
+          "a": 0.19,
+          "tol": 0.01,
+          "unit": "mm",
+          "e": "La pompe montera de 0,19 mm de plus que le moteur (0,29 − 0,10). À froid, le moteur doit donc être 0,19 mm plus HAUT (ou la pompe 0,19 mm plus basse) pour que les axes coïncident à chaud. Aligner « parfaitement » à froid donne un désalignement de 0,19 mm en service.",
+          "isTrap": true,
+          "trapWarning": "Un lignage « parfait » à froid peut être mauvais à chaud : appliquez toujours les cibles thermiques du constructeur ou mesurées.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Mesure à la jauge d'écartement sur un accouplement de diamètre 200 mm : différence d'écartement haut/bas de 0,12 mm. Quelle est l'angularité en mm/100 mm ?",
+          "type": "num",
+          "a": 0.06,
+          "tol": 0.005,
+          "unit": "mm/100 mm",
+          "e": "Angularité = 0,12 / 200 × 100 = 0,06 mm/100 mm (0,6 mrad). À 3000 tr/min, la tolérance usuelle est ≤ 0,05 mm/100 mm : le lignage est HORS tolérance. Erreur fréquente : comparer 0,12 mm directement à la tolérance sans normaliser par le diamètre.",
+          "isTrap": true,
+          "trapWarning": "L'angularité se normalise toujours sur 100 mm (ou en mrad), jamais en écart brut sur le diamètre de l'accouplement.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Lignage laser, plan vertical : au centre de l'accouplement, le moteur est 0,10 mm trop haut et l'angularité vaut 0,06 mm/100 mm (le moteur « monte » vers l'arrière). Pieds avant à 200 mm et pieds arrière à 600 mm du centre de l'accouplement. Quelle épaisseur de cales faut-il retirer sous les pieds ARRIÈRE ?",
+          "type": "num",
+          "a": 0.46,
+          "tol": 0.01,
+          "unit": "mm",
+          "e": "Pente = 0,06 / 100 = 0,0006 mm/mm. Pied avant : 0,10 + 0,0006 × 200 = 0,22 mm. Pied arrière : 0,10 + 0,0006 × 600 = 0,46 mm. On retire 0,22 mm à l'avant et 0,46 mm à l'arrière.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative"
+        },
+        {
+          "t": "Pour une machine tournant à 3000 tr/min, quelle tolérance d'angularité est typiquement retenue pour un lignage acceptable ?",
+          "type": "single",
+          "o": [
+            "≤ 0,50 mm/100 mm",
+            "≤ 0,20 mm/100 mm",
+            "≤ 0,05 mm/100 mm",
+            "Aucune tolérance si l'accouplement est élastique"
+          ],
+          "a": 2,
+          "e": "Les tolérances se resserrent avec la vitesse. À 3000 tr/min, un ordre de grandeur courant est ≤ 0,05 mm/100 mm pour l'angularité (et ≈ 0,05 mm pour l'offset en acceptable, 0,03 mm en excellent).",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Un groupe motopompe aligné au laser à froid dans les tolérances présente, après 2 heures de marche, un 1x/2x axial élevé avec 180° à travers l'accouplement. À froid, au redémarrage, les vibrations sont faibles. Quelle est la cause la plus probable ?",
+          "type": "single",
+          "o": [
+            "Défaut d'équilibrage résiduel",
+            "Dilatation thermique différentielle des corps de machine non compensée lors du réglage à froid : le désalignement apparaît en service à chaud",
+            "Jeu interne de l'accouplement",
+            "Erreur de lecture du système laser"
+          ],
+          "a": 1,
+          "e": "La signature (axial, 180° à travers l'accouplement) est celle d'un désalignement, mais elle n'apparaît qu'à chaud : les croissances thermiques ne sont pas compensées. Il faut mesurer ou calculer les cibles thermiques (ou faire un lignage à chaud) et vérifier les contraintes de tuyauterie.",
+          "isTrap": true,
+          "trapWarning": "Un lignage conforme à froid n'est pas une preuve d'alignement en service.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Comment vérifier rapidement qu'une tuyauterie exerce une contrainte excessive sur une pompe ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Placer des comparateurs sur l'arbre ou l'accouplement et desserrer les brides : un déplacement > 0,05 mm indique une contrainte excessive",
+            "Contrôler que les boulons de bride s'enfilent librement sans forcer",
+            "Augmenter le couple de serrage des pieds de la pompe",
+            "Comparer les mesures de lignage brides serrées et desserrées"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "Une tuyauterie qui « tire » déforme le corps de pompe (pied boîteux induit) et désaligne l'arbre. Serrer davantage les pieds masque le problème et accroît la déformation du carter.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "Pour confirmer un désalignement angulaire entre deux machines accouplées au moyen de l'analyse de phase, quelle relation de phase axiale doit-on observer à travers l'accouplement ?",
+          "type": "single",
+          "o": [
+            "Une phase axiale identique (0° de déphasage) de part et d'autre de l'accouplement",
+            "Une nette opposition de phase d'environ 180° (± 30°) mesurée en direction axiale entre le palier menant et le palier mené à travers l'accouplement",
+            "Une phase axiale totalement aléatoire et non répétable",
+            "La phase axiale est insensible au désalignement"
+          ],
+          "a": 1,
+          "e": "Le désalignement angulaire provoque un mouvement de basculement alternatif : lorsque l'arbre menant pousse axialement vers l'accouplement, l'arbre mené est tiré. La signature caractéristique est une opposition de phase axiale de 180° à travers l'accouplement.",
+          "isTrap": true,
+          "trapWarning": "Un fort axial 1x n'est pas forcément un désalignement : comparez les phases sur le même palier ET à travers l'accouplement.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Pendant un lignage au comparateur (méthode jante-face), on fait tourner uniquement l'arbre moteur, l'arbre pompe restant immobile. Quelle erreur est introduite ?",
+          "type": "single",
+          "o": [
+            "Aucune",
+            "Le faux-rond (runout) de la portée et les défauts de forme du moyeu sont lus comme du désalignement : il faut faire tourner les deux arbres ensemble pour que la mesure soit indépendante du runout",
+            "Une erreur uniquement sur l'angularité verticale",
+            "Une erreur de dilatation"
+          ],
+          "a": 1,
+          "e": "En tournant les deux arbres ensemble (les points de mesure restant face à face), on mesure la position des AXES de rotation, insensible au faux-rond des surfaces. En ne tournant qu'un arbre, le capteur balaie une surface excentrée ou voilée et le runout pollue la mesure.",
+          "isTrap": true,
+          "trapWarning": "Tournez toujours les deux arbres ensemble lors d'un lignage : sinon vous mesurez le faux-rond, pas l'alignement.",
+          "difficulty": "piege",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Sur un moteur électrique, le serrage d'un pied arrière fait grimper la vibration à 100 Hz (2x fréquence réseau), et son desserrage la fait chuter. Quelle est la cause ?",
+          "type": "single",
+          "o": [
+            "Désalignement parallèle pur",
+            "Pied boîteux : le serrage sur un pied bancal déforme le carter statorique et crée une excentricité d'entrefer sous contrainte",
+            "Jeu interne de clavette",
+            "Mauvais sens de rotation du moteur"
+          ],
+          "a": 1,
+          "e": "La sensibilité du 2xLF au serrage d'un pied est la signature du pied boîteux : le stator se déforme, l'entrefer devient inégal et l'attraction magnétique alternée à 2 × 50 Hz augmente. Le traitement passe par le calage, pas par le lignage ni l'équilibrage.",
+          "isTrap": true,
+          "trapWarning": "Un 2xLF sensible au serrage des pieds pointe vers le pied boîteux, pas vers un défaut électrique du moteur.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Roulements & Analyse spectrale",
+      "desc": "Fréquences cinématiques, stades de dégradation, enveloppe, PeakVue, SPM, kurtosis, faux brinelling & fluting",
+      "min": 60,
+      "qs": [
+        {
+          "t": "Roulement 6205 : 9 billes, diamètre de bille d = 7,94 mm, diamètre primitif D = 39,04 mm, angle de contact 0°. L'arbre tourne à 1480 tr/min. Calculez la BPFO (fréquence de passage sur bague externe).",
+          "type": "num",
+          "a": 88.42,
+          "tol": 0.5,
+          "unit": "Hz",
+          "e": "f0 = 1480 / 60 = 24,67 Hz. BPFO = (n/2) × f0 × (1 − d/D × cos φ) = 4,5 × 24,67 × (1 − 0,2034) = 88,42 Hz, soit 3,585x. Valeur non entière : un BPFO ne tombe jamais exactement sur un harmonique de 1x.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "brg",
+          "pre": {
+            "rpm": 1480,
+            "n": 9,
+            "d": 7.94,
+            "D": 39.04,
+            "phi": 0
+          }
+        },
+        {
+          "t": "Même roulement (9 billes, d = 7,94 mm, D = 39,04 mm, φ = 0°) à 1480 tr/min. Calculez la BPFI (fréquence de passage sur bague interne).",
+          "type": "num",
+          "a": 133.58,
+          "tol": 0.5,
+          "unit": "Hz",
+          "e": "BPFI = (n/2) × f0 × (1 + d/D × cos φ) = 4,5 × 24,67 × 1,2034 = 133,58 Hz (5,415x). Vérification : BPFO + BPFI = n × f0 = 9 × 24,67 = 222,0 Hz.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "brg",
+          "pre": {
+            "rpm": 1480,
+            "n": 9,
+            "d": 7.94,
+            "D": 39.04,
+            "phi": 0
+          }
+        },
+        {
+          "t": "Même roulement (9 billes, d = 7,94 mm, D = 39,04 mm, φ = 0°) à 1480 tr/min. Calculez la FTF (fréquence fondamentale de cage).",
+          "type": "num",
+          "a": 9.82,
+          "tol": 0.1,
+          "unit": "Hz",
+          "e": "FTF = (f0/2) × (1 − d/D × cos φ) = 12,33 × 0,7966 = 9,82 Hz, soit 0,398x. La FTF est toujours sous-synchrone (≈ 0,35x à 0,45x) : c'est la vitesse de rotation de la cage, bague externe fixe.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "brg",
+          "pre": {
+            "rpm": 1480,
+            "n": 9,
+            "d": 7.94,
+            "D": 39.04,
+            "phi": 0
+          }
+        },
+        {
+          "t": "Même roulement (9 billes, d = 7,94 mm, D = 39,04 mm, φ = 0°) à 1480 tr/min. Calculez la BSF (fréquence de rotation de l'élément roulant).",
+          "type": "num",
+          "a": 58.13,
+          "tol": 0.5,
+          "unit": "Hz",
+          "e": "BSF = (D / 2d) × f0 × [1 − (d/D × cos φ)²] = 2,458 × 24,67 × 0,9587 = 58,13 Hz (2,357x). En pratique, un défaut de bille impacte les deux bagues par tour de bille : on observe souvent 2 × BSF = 116,3 Hz, avec des bandes latérales à la FTF.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative",
+          "tool": "brg",
+          "pre": {
+            "rpm": 1480,
+            "n": 9,
+            "d": 7.94,
+            "D": 39.04,
+            "phi": 0
+          }
+        },
+        {
+          "t": "Sur un moteur à 1490 tr/min, un analyste identifie un « défaut de bague externe » sur un pic à 4,00x exactement, avec ses harmoniques 8x et 12x. Quelle critique s'impose ?",
+          "type": "single",
+          "o": [
+            "Diagnostic correct : BPFO vaut souvent 4x",
+            "Diagnostic douteux : les fréquences de roulement ne sont jamais des multiples entiers exacts de 1x (glissement, géométrie) ; un 4,00x exact oriente vers une source synchrone (4 aubes, 4 pôles, accouplement à 4 griffes, jeu mécanique)",
+            "Diagnostic correct si l'enveloppe le confirme",
+            "Il s'agit forcément de la cage"
+          ],
+          "a": 1,
+          "e": "Les rapports cinématiques dépendent de d/D et cos φ : ils donnent des ordres non entiers (3,15x ; 3,58x ; 5,42x...). De plus, les éléments roulants glissent légèrement (1 à 2 %). Un pic verrouillé sur un multiple entier exact est synchrone de l'arbre et n'est pas un défaut de roulement.",
+          "isTrap": true,
+          "trapWarning": "Un pic exactement à un multiple entier de 1x n'est JAMAIS une fréquence de défaut de roulement.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "brg"
+        },
+        {
+          "t": "Pourquoi le spectre d'un défaut de bague interne (BPFI) présente-t-il systématiquement des bandes latérales espacées de 1x autour de la BPFI et de ses harmoniques ?",
+          "type": "single",
+          "o": [
+            "À cause de la vitesse de rotation de la cage",
+            "Parce que la bague interne tourne avec l'arbre et traverse périodiquement la zone de charge radiale fixe une fois par tour, créant une modulation d'amplitude à 1x",
+            "À cause de la tolérance de fabrication du roulement",
+            "Parce que la bague externe tourne également"
+          ],
+          "a": 1,
+          "e": "Bague interne solidaire de l'arbre : le défaut passe dans la zone de charge (force radiale fixe) puis en sort, une fois par tour. L'amplitude des impacts est modulée à 1x → bandes latérales ± 1x. Un défaut de bague externe, fixe dans la zone de charge, donne un BPFO peu modulé.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "brg"
+        },
+        {
+          "t": "Un spectre de vitesse 0-1000 Hz est parfaitement propre (aucun pic de roulement) alors que la mesure HF (SPM / ultrasons > 20 kHz) a augmenté de 12 dB en 2 mois. À quel stade de dégradation se trouve le roulement ?",
+          "type": "single",
+          "o": [
+            "Stade 1 : défaut microscopique détectable uniquement en ultrasons / HF",
+            "Stade 2 : excitation des fréquences de résonance du roulement",
+            "Stade 3 : apparition des fréquences de défaut fondamentales",
+            "Stade 4 : bruit aléatoire terminal"
+          ],
+          "a": 0,
+          "e": "Stade 1 : énergie uniquement dans la plage ultrasonique (20-60 kHz) ; stade 2 : résonance des composants (≈ 500 Hz-2 kHz) et enveloppe ; stade 3 : BPFO/BPFI/BSF et harmoniques visibles, bandes latérales ; stade 4 : bruit large bande, 1x qui augmente, fréquences discrètes qui « disparaissent ».",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "mineure",
+          "tool": "brg"
+        },
+        {
+          "t": "Sur un roulement suivi en enveloppe, les pics BPFO et leurs harmoniques, très nets depuis 3 mois, ont presque disparu ; le spectre de vitesse montre un plancher de bruit relevé, un 1x en hausse et la température du palier augmente. Le technicien propose de lever l'alerte. Que répondre ?",
+          "type": "single",
+          "o": [
+            "Lever l'alerte : les fréquences de défaut ont disparu",
+            "Le défaut s'est « rodé » : surveillance normale",
+            "Stade 4 terminal : l'écaillage généralisé détruit la périodicité des chocs, les pics discrets se noient dans le bruit aléatoire ; risque de grippage imminent, remplacement immédiat",
+            "Erreur de mesure : refaire la ronde"
+          ],
+          "a": 2,
+          "e": "PIÈGE DU STADE 4 : la disparition des pics discrets ne signifie pas guérison. Les jeux augmentent, le 1x croît, le bruit de fond explose et la température monte. C'est le dernier stade avant la rupture de cage ou le grippage.",
+          "isTrap": true,
+          "trapWarning": "Des fréquences de défaut qui disparaissent avec un bruit de fond qui monte = stade terminal, pas amélioration.",
+          "difficulty": "piege",
+          "gravity": "urgence_arret",
+          "tool": "brg"
+        },
+        {
+          "t": "Quelles sont les étapes correctes de la démodulation d'enveloppe ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Filtrage passe-bande autour d'une zone de résonance excitée par les chocs (ex. 5-10 kHz), éliminant le 1x et les basses fréquences",
+            "Redressement et détection d'enveloppe (Hilbert ou redressement + passe-bas)",
+            "Intégration du signal en déplacement avant filtrage",
+            "FFT de l'enveloppe pour révéler la cadence de répétition des chocs (BPFO, BPFI...)"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "La démodulation exploite la résonance HF comme « porteuse » : on isole la bande, on extrait l'enveloppe, puis on en fait le spectre pour lire les fréquences de répétition des impacts. Intégrer en déplacement écraserait au contraire les hautes fréquences utiles.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative",
+          "tool": "brg"
+        },
+        {
+          "t": "Quelle est la spécificité de la méthode PeakVue par rapport à l'enveloppe classique ?",
+          "type": "single",
+          "o": [
+            "Elle mesure le déplacement basse fréquence",
+            "Elle capture la valeur crête vraie des ondes de contrainte à très haute fréquence d'échantillonnage, préservant l'amplitude des micro-chocs très brefs",
+            "Elle ne fonctionne que sur les signaux continus",
+            "Elle ne nécessite aucun capteur accéléromètre"
+          ],
+          "a": 1,
+          "e": "PeakVue échantillonne à très haute fréquence, filtre passe-haut, puis retient la crête de chaque intervalle : l'amplitude (en g crête) traduit la sévérité réelle des chocs et la forme d'onde reste exploitable, notamment sur les machines lentes.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "brg"
+        },
+        {
+          "t": "Un kurtosis de 3,0 est mesuré sur un roulement qui présentait 9,5 deux mois plus tôt. Que peut-on en conclure seul ?",
+          "type": "single",
+          "o": [
+            "Le roulement est redevenu sain",
+            "Rien de rassurant sans le RMS : un kurtosis de 3 correspond à une distribution gaussienne, ce qui est typique d'un roulement sain MAIS aussi d'un endommagement généralisé (stade 4)",
+            "Le capteur est saturé",
+            "Défaut de lubrification uniquement"
+          ],
+          "a": 1,
+          "e": "Le kurtosis mesure le caractère impulsif : ≈ 3 (gaussien) pour un roulement neuf, > 4-5 en présence de chocs isolés. Au stade terminal, les chocs deviennent si nombreux que le signal redevient « gaussien » : le kurtosis redescend vers 3 alors que le RMS explose. Il ne s'interprète jamais seul.",
+          "isTrap": true,
+          "trapWarning": "Kurtosis qui revient à 3 = soit roulement sain, soit roulement détruit. Lisez-le toujours avec le RMS et la tendance.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "brg"
+        },
+        {
+          "t": "Une pompe de secours restée 8 mois à l'arrêt, à côté d'une pompe en service, présente dès sa mise en marche un BPFO net. Au démontage, on observe des empreintes brillantes régulièrement espacées au pas des billes sur la bague externe, sans écaillage préalable. Quel est le mécanisme ?",
+          "type": "single",
+          "o": [
+            "Brinelling vrai par choc au montage",
+            "Faux brinelling : usure par micro-oscillations sous les vibrations transmises par la machine voisine alors que le film lubrifiant ne se forme pas (machine à l'arrêt)",
+            "Électro-érosion par variateur",
+            "Défaut de fabrication"
+          ],
+          "a": 1,
+          "e": "Le faux brinelling (fretting d'arrêt) apparaît sur machines immobiles soumises aux vibrations ambiantes : sans rotation, pas de film d'huile, les éléments roulants oscillent sur place et usent la piste au pas des billes. Prévention : rotation périodique des secours (quelques tours par semaine), isolation vibratoire, blocage en transport.",
+          "isTrap": true,
+          "trapWarning": "Une machine à l'arrêt n'est pas à l'abri : les vibrations voisines usent ses roulements (faux brinelling). Faites tourner les secours périodiquement.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "brg"
+        },
+        {
+          "t": "Un moteur alimenté par variateur de fréquence présente un pic proche de BPFO avec de très nombreux harmoniques et un « bruit de planche à laver ». Au démontage, la piste présente des stries transversales régulières (aspect de tôle ondulée). Quelle est la cause et la solution ?",
+          "type": "single",
+          "o": [
+            "Manque de graisse dans le palier",
+            "Passage de courant électrique d'arbre (fluting / électro-érosion) dû à l'onduleur du variateur : installer une bague de mise à la terre d'arbre ou un roulement isolé",
+            "Vitesse de rotation trop faible",
+            "Pression d'huile excessive"
+          ],
+          "a": 1,
+          "e": "Les tensions de mode commun du VFD (fronts dV/dt élevés) se déchargent à travers le roulement : micro-cratères puis cannelures régulières. Le spectre ressemble à un BPFO multi-harmoniques. Remplacer le roulement à l'identique ne règle rien : il faut traiter le chemin du courant.",
+          "isTrap": true,
+          "trapWarning": "Sur moteur variateur, un « BPFO » récurrent après remplacement doit faire suspecter l'électro-érosion, pas un défaut mécanique.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "brg"
+        },
+        {
+          "t": "Sur un roulement à billes sous charge, un pic spectral discret et ses harmoniques apparaissent à une fréquence sous-synchrone située entre 0,38x et 0,44x. Quel composant cinématique du roulement est associé à cette fréquence ?",
+          "type": "single",
+          "o": [
+            "La bague externe (fréquence BPFO)",
+            "La cage du roulement (fréquence fondamentale de cage FTF)",
+            "La bague interne (fréquence BPFI)",
+            "Les éléments roulants seuls (fréquence BSF)"
+          ],
+          "a": 1,
+          "e": "La fréquence de cage FTF (Fundamental Train Frequency) est toujours sous-synchrone, typiquement située entre 0,38x et 0,44x la vitesse de rotation. L'apparition de la FTF et de ses harmoniques signale une détérioration ou une rupture de la cage du roulement.",
+          "isTrap": true,
+          "trapWarning": "Pas d'oil whirl sans palier lisse ! Sur roulement, un pic vers 0,4x évoque d'abord la cage (FTF).",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "brg"
+        },
+        {
+          "t": "Un pic à 107,5 Hz est relevé sur un moteur à 1800 tr/min (30 Hz). Le roulement a les facteurs : BPFO = 3,585x, BPFI = 5,415x, BSF = 2,357x, FTF = 0,398x. Quel composant est en cause ?",
+          "type": "single",
+          "o": [
+            "Bague externe (107,5 / 30 = 3,58x ≈ BPFO)",
+            "Bague interne",
+            "Élément roulant",
+            "Cage"
+          ],
+          "a": 0,
+          "e": "Normaliser en ordres : 107,5 / 30 = 3,583x ≈ 3,585x = BPFO. Travailler en ordres (multiples de 1x) rend l'identification indépendante de la vitesse, à condition d'utiliser la vitesse RÉELLE.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "significative",
+          "tool": "brg",
+          "pre": {
+            "rpm": 1800
+          }
+        },
+        {
+          "t": "Quelles affirmations sur la méthode Shock Pulse (SPM) sont exactes ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Elle exploite la résonance propre du transducteur (≈ 32 kHz) pour mesurer l'intensité des ondes de choc",
+            "Les valeurs dBm (maximum) et dBc (tapis) sont normalisées par la vitesse et le diamètre de l'arbre (dBi) pour obtenir dBn",
+            "Un écart faible entre dBm et dBc avec un dBn élevé oriente vers un problème de lubrification",
+            "Elle est insensible au mode de fixation du capteur"
+          ],
+          "a": [
+            0,
+            1,
+            2
+          ],
+          "e": "Comme toutes les méthodes HF, le SPM est très sensible à la qualité et au chemin de transmission (point de mesure proche de la zone de charge, peu d'interfaces). Le couple dBm/dBc renseigne sur l'état : grand écart = chocs (défaut), écart faible + niveau élevé = film lubrifiant insuffisant.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative",
+          "tool": "brg"
+        },
+        {
+          "t": "Après regraissage d'un roulement présentant un niveau d'enveloppe élevé, le niveau chute de 70 % puis remonte à sa valeur initiale en 10 jours. Que conclure ?",
+          "type": "single",
+          "o": [
+            "Le problème était seulement un manque de graisse : réglé",
+            "Défaut mécanique réel (écaillage) temporairement masqué par l'amortissement de la graisse fraîche : planifier le remplacement",
+            "Le capteur a été déplacé",
+            "Il faut regraisser tous les 10 jours définitivement"
+          ],
+          "a": 1,
+          "e": "Une graisse neuve amortit temporairement les chocs. Si le niveau revient, le défaut est mécanique. À l'inverse, un problème purement de lubrification reste corrigé durablement. Le sur-graissage (température qui monte) est aussi à éviter.",
+          "isTrap": true,
+          "trapWarning": "Une baisse de vibration après regraissage ne prouve pas l'absence de défaut : vérifiez l'évolution sur plusieurs jours.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "brg"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Engrenages, Pompes & Ventilateurs",
+      "desc": "GMF, dent de chasse, BPF, cavitation, recirculation & courroies",
+      "min": 55,
+      "qs": [
+        {
+          "t": "Un pignon de 23 dents est entraîné par un moteur à 1485 tr/min. Calculez la fréquence d'engrènement GMF.",
+          "type": "num",
+          "a": 569.25,
+          "tol": 1,
+          "unit": "Hz",
+          "e": "f0 = 1485 / 60 = 24,75 Hz ; GMF = Z × f0 = 23 × 24,75 = 569,25 Hz. La GMF est identique vue du pignon ou de la roue (Z1 × f1 = Z2 × f2).",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure",
+          "tool": "freq",
+          "pre": {
+            "rpm": 1485,
+            "z": 23
+          }
+        },
+        {
+          "t": "Le réducteur précédent (pignon 23 dents à 1485 tr/min) entraîne une roue de 87 dents. Quel espacement de bandes latérales autour de la GMF signale un défaut sur la ROUE ?",
+          "type": "num",
+          "a": 6.54,
+          "tol": 0.05,
+          "unit": "Hz",
+          "e": "Vitesse roue = 1485 × 23 / 87 = 392,6 tr/min → 6,54 Hz. Des bandes latérales à ± 6,54 Hz pointent vers la roue (excentricité, dent abîmée) ; à ± 24,75 Hz vers le pignon. Une résolution suffisante est indispensable pour les séparer.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "freq",
+          "pre": {
+            "rpm": 1485,
+            "z1": 23,
+            "z2": 87
+          }
+        },
+        {
+          "t": "Un engrenage a Z1 = 24 dents (pignon à 1500 tr/min) et Z2 = 60 dents. Calculez la fréquence de dent de chasse fHT = GMF / PPCM(Z1, Z2).",
+          "type": "num",
+          "a": 5,
+          "tol": 0.05,
+          "unit": "Hz",
+          "e": "GMF = 24 × 25 = 600 Hz ; PPCM(24, 60) = 120 → fHT = 600 / 120 = 5 Hz. Les mêmes paires de dents se rencontrent toutes les 0,2 s. Avec un facteur commun de 12, ce couple n'est pas « hunting » : un défaut de taillage se répète sur les mêmes dents et accélère l'usure.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative",
+          "tool": "freq",
+          "pre": {
+            "rpm": 1500,
+            "z1": 24,
+            "z2": 60
+          }
+        },
+        {
+          "t": "Sur un réducteur, la GMF est passée de 3 à 6 mm/s après une augmentation de la charge de 50 à 100 %, sans aucune bande latérale nouvelle. Le technicien propose un arrêt pour inspection. Qu'en pensez-vous ?",
+          "type": "single",
+          "o": [
+            "Arrêter d'urgence le réducteur",
+            "Comportement normal sous charge : la flexion élastique des dents sous fort couple augmente l'amplitude à la GMF ; sans bandes latérales nouvelles, il n'y a pas d'anomalie locale",
+            "Remplacer les pignons immédiatement",
+            "Changer l'huile en urgence"
+          ],
+          "a": 1,
+          "e": "La GMF existe sur tout engrenage chargé (déformation élastique des dents, erreur de transmission). Son amplitude dépend de la charge. Les indicateurs de dégradation sont les bandes latérales (1x pignon/roue), les harmoniques 2×GMF, 3×GMF et l'excitation des fréquences propres des engrenages.",
+          "isTrap": true,
+          "trapWarning": "Une GMF élevée n'est pas un défaut en soi : comparez à charge égale et regardez les bandes latérales.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "freq"
+        },
+        {
+          "t": "Le spectre d'un réducteur montre de nombreuses bandes latérales espacées de 24,75 Hz (1x pignon) autour de la GMF et de 2×GMF, et la forme d'onde temporelle révèle un impact net une fois par tour du pignon. Quel diagnostic retenir ?",
+          "type": "single",
+          "o": [
+            "Usure uniforme normale",
+            "Dent cassée ou fissurée sur le pignon : choc périodique à 1x pignon, confirmé par la forme d'onde",
+            "Défaut sur la roue",
+            "Problème de lubrification"
+          ],
+          "a": 1,
+          "e": "Une dent endommagée produit un choc une fois par tour de la roue qui la porte : bandes latérales nombreuses à ce 1x et impacts visibles dans le signal temporel. La forme d'onde est indispensable : le spectre seul répartit l'énergie d'un choc unique sur de nombreuses raies.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "critique",
+          "tool": "freq"
+        },
+        {
+          "t": "Un engrènement présente un 2×GMF nettement supérieur à la GMF, avec des bandes latérales à 1x. Quelle cause privilégier ?",
+          "type": "single",
+          "o": [
+            "Engrènement parfait sans anomalie",
+            "Désalignement des engrenages (portée de denture décentrée) ou jeu d'entre-dents excessif",
+            "Denture neuve en phase de rodage",
+            "Sens de rotation inversé"
+          ],
+          "a": 1,
+          "e": "Un 2×GMF (voire 3×GMF) dominant traduit un mauvais contact de denture : désalignement des axes des pignons, portée sur un bord ou jeu d'entre-dents inadapté.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative",
+          "tool": "freq"
+        },
+        {
+          "t": "Une pompe centrifuge a une roue de 7 aubes et tourne à 2980 tr/min. Calculez la fréquence de passage des aubes BPF.",
+          "type": "num",
+          "a": 347.67,
+          "tol": 1,
+          "unit": "Hz",
+          "e": "f0 = 2980 / 60 = 49,67 Hz ; BPF = 7 × 49,67 = 347,67 Hz. Une composante BPF modérée est normale ; c'est son augmentation qui signale un problème hydraulique ou mécanique.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure",
+          "tool": "freq",
+          "pre": {
+            "rpm": 2980,
+            "z": 7
+          }
+        },
+        {
+          "t": "Une pompe centrifuge présente une vibration très intense à la fréquence de passage des aubes (BPF = 8 mm/s) après remplacement de la roue par un modèle de plus grand diamètre, alors que le 1x rotation est très faible. Quelle est la cause ?",
+          "type": "single",
+          "o": [
+            "La vitesse de rotation a diminué",
+            "Le jeu radial entre le bord extérieur des aubes et le bec de volute (cutwater clearance) est devenu trop faible, provoquant des impulsions de pression violentes à chaque passage d'aube",
+            "Le fluide s'est évaporé dans le corps de pompe",
+            "Le clapet anti-retour est trop lourd"
+          ],
+          "a": 1,
+          "e": "Un pic dominant à la BPF est purement hydraulique : lorsque le diamètre de la roue est augmenté sans adapter la volute, l'espace entre aubes et bec de volute diminue. Chaque passage d'aube génère une pulsation de pression brutale qui fait vibrer le corps de pompe à la BPF.",
+          "isTrap": true,
+          "trapWarning": "La BPF est une signature hydraulique : elle ne s'équilibre JAMAIS. Cherchez le jeu au bec de volute et le point de fonctionnement.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "freq"
+        },
+        {
+          "t": "Une pompe centrifuge présente un bruit large bande aléatoire entre 2 et 10 kHz, un crépitement audible semblable à du gravier et un spectre sans composante discrète périodique. En fermant partiellement la vanne de REFOULEMENT, le bruit disparaît instantanément. Quel est le diagnostic ?",
+          "type": "single",
+          "o": [
+            "Cavitation : la fermeture du refoulement réduit le débit, ce qui diminue le NPSH requis et fait cesser la vaporisation dans la roue",
+            "Usure mécanique générale",
+            "Présence d'air dans le circuit électrique",
+            "Débit laminaire trop stable"
+          ],
+          "a": 1,
+          "e": "L'implosion des bulles de cavitation génère un plancher de bruit haute fréquence aléatoire. Le test de variation du débit (fermeture partielle de vanne) permet de confirmer l'origine hydraulique : en réduisant le débit, le NPSH requis diminue et la cavitation cesse instantanément.",
+          "isTrap": true,
+          "trapWarning": "Plancher de bruit haute fréquence sur une pompe : vérifiez toujours le débit et le test de vanne pour confirmer le diagnostic de cavitation hydraulique.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "freq"
+        },
+        {
+          "t": "Quels symptômes caractérisent la cavitation d'une pompe centrifuge ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Énergie aléatoire large bande HF, souvent avec une BPF instable",
+            "Bruit audible de crépitement (« gravier » circulant dans la pompe)",
+            "Pic discret stable à exactement 1x",
+            "Érosion en piqûres côté aspiration (bord d'attaque) des aubes"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "L'implosion des bulles de vapeur génère des chocs aléatoires, donc du bruit large bande et non un pic discret synchrone. Les dégâts se situent sur la face basse pression près du bord d'attaque des aubes. Causes : NPSH disponible insuffisant (niveau bas, filtre colmaté, température élevée, vanne d'aspiration étranglée).",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "Une pompe fonctionne à 30 % de son débit nominal (vanne de refoulement très étranglée). On observe des pulsations aléatoires sous-synchrones, une vibration axiale instable et un bruit irrégulier. Quel phénomène et quelle action ?",
+          "type": "single",
+          "o": [
+            "Vitesse de rotation trop élevée : ralentir",
+            "Recirculation hydraulique interne à faible débit : rétablir le point de fonctionnement au débit nominal par la ligne de recyclage (by-pass)",
+            "Inversion du sens de rotation de la pompe",
+            "Surpression atmosphérique"
+          ],
+          "a": 1,
+          "e": "À très faible débit, l'écoulement décolle et forme des tourbillons de recirculation qui créent des efforts aléatoires, des poussées axiales variables et une érosion côté pression des aubes. Ce n'est pas un défaut mécanique : c'est le point de fonctionnement qu'il faut corriger.",
+          "isTrap": true,
+          "trapWarning": "Étrangler toujours plus le refoulement pour « soulager » une pompe la fait sortir du BEP et provoque la recirculation.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Un ventilateur de tirage de 12 pales tourne à 990 tr/min. Calculez la fréquence de passage des pales BPF.",
+          "type": "num",
+          "a": 198,
+          "tol": 0.5,
+          "unit": "Hz",
+          "e": "f0 = 990 / 60 = 16,5 Hz ; BPF = 12 × 16,5 = 198 Hz.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure",
+          "tool": "freq",
+          "pre": {
+            "rpm": 990,
+            "z": 12
+          }
+        },
+        {
+          "t": "Un ventilateur de fumées voit son 1x radial passer de 2 à 6,5 mm/s en 3 semaines, avec une phase qui dérive lentement. Après un premier équilibrage réussi, le problème revient un mois plus tard. Quelle est la cause racine probable ?",
+          "type": "single",
+          "o": [
+            "Régime thermique stationnaire",
+            "Encrassement progressif et asymétrique des aubes par les suies et décollement aléatoire de plaques de dépôt",
+            "Usure des pales par friction d'air pur",
+            "Changement de fréquence du réseau électrique"
+          ],
+          "a": 1,
+          "e": "L'encrassement asymétrique d'une roue de ventilateur travaillant sur des gaz chargés (suies, poussières) crée une dissymétrie de masse progressive qui fait dériver la phase. Nettoyer la roue et éliminer les dépôts est la priorité technique : compenser un encrassement par des masses est inopérant car le décollement de plaques de poussières recréera immédiatement une anomalie.",
+          "isTrap": true,
+          "trapWarning": "Sur un ventilateur industriel, ne tentez jamais de compenser un encrassement par des masses : nettoyez et lavez la roue en priorité.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "freq"
+        },
+        {
+          "t": "Un ventilateur à courroies : poulie motrice de 200 mm de diamètre à 1480 tr/min, courroie de 2000 mm de longueur. Calculez la fréquence de passage de la courroie.",
+          "type": "num",
+          "a": 7.75,
+          "tol": 0.1,
+          "unit": "Hz",
+          "e": "f_courroie = π × D × N / L = π × 0,200 × 24,67 / 2,000 = 7,75 Hz. Fréquence sous-synchrone (inférieure aux vitesses des deux poulies) : avec ses harmoniques (2× souvent dominant), elle caractérise une courroie détendue, usée ou défectueuse.",
+          "isTrap": true,
+          "trapWarning": "Sur une transmission par courroie, un pic sous-synchrone est prioritairement la fréquence cinématique de passage de la courroie.",
+          "difficulty": "piege",
+          "gravity": "mineure",
+          "tool": "freq",
+          "pre": {
+            "rpm": 1480
+          },
+          "o": [
+            "4,85 Hz",
+            "7,75 Hz (fréquence de passage de la courroie)",
+            "24,67 Hz",
+            "123,3 Hz"
+          ]
+        },
+        {
+          "t": "Sur un réducteur, des bandes latérales à 1x pignon apparaissent autour d'une fréquence propre de la roue (et non plus seulement autour de la GMF), avec un niveau d'enveloppe en forte hausse. Comment qualifier la situation ?",
+          "type": "single",
+          "o": [
+            "Situation normale de rodage",
+            "Dégradation avancée : les chocs de denture excitent les fréquences propres des engrenages ; risque de rupture de dent, intervention à planifier en urgence",
+            "Problème de lubrification mineur",
+            "Artefact de mesure"
+          ],
+          "a": 1,
+          "e": "Lorsque les impacts (dent cassée, écaillage sévère) sont assez énergétiques pour exciter les fréquences propres des engrenages, la situation est grave. Combinée à une hausse d'enveloppe, elle impose un arrêt programmé rapide et une inspection endoscopique.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "critique",
+          "tool": "freq"
+        },
+        {
+          "t": "Un couple d'engrenages Z1 = 17 et Z2 = 53 a un pignon tournant à 1485 tr/min. Un léger « grognement » se répète à très basse cadence. Calculez la fréquence de dent de chasse.",
+          "type": "num",
+          "a": 0.467,
+          "tol": 0.01,
+          "unit": "Hz",
+          "e": "GMF = 17 × 24,75 = 420,75 Hz ; 17 et 53 sont premiers entre eux → PPCM = 901 ; fHT = 420,75 / 901 = 0,467 Hz (une rencontre de la même paire de dents toutes les 2,14 s). Cette fréquence très basse demande une forme d'onde longue et une résolution fine ; elle signale un défaut sur une dent de chaque roue (taillage, montage).",
+          "isTrap": true,
+          "trapWarning": "La fréquence de dent de chasse est très basse et souvent confondue avec un battement ou un desserrage : calculez-la systématiquement.",
+          "difficulty": "piege",
+          "gravity": "significative",
+          "tool": "freq",
+          "pre": {
+            "rpm": 1485,
+            "z1": 17,
+            "z2": 53
+          }
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Résonance, Vitesse critique & Analyse de phase",
+      "desc": "Bode, Nyquist, bump test, résonance directionnelle, TMD, oil whirl & oil whip",
+      "min": 60,
+      "qs": [
+        {
+          "t": "Lors d'une montée en vitesse à travers une vitesse critique, que vaut le retard de phase de la réponse vibratoire par rapport à la force périodique d'excitation au sommet exact du pic de résonance ?",
+          "type": "single",
+          "o": [
+            "0° (la réponse est rigoureusement en phase avec la force)",
+            "90° de retard",
+            "180° de retard",
+            "45° d'avance"
+          ],
+          "a": 2,
+          "e": "Pour un résonateur à un degré de liberté excité harmoniquement : bien en dessous de la résonance, la réponse est en phase (0°). Au sommet exact de la résonance, la force est en quadrature : le retard de phase vaut exactement 90°. Au-delà de la résonance, le retard atteint 180°.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "Quel graphique représente l'amplitude 1x ET la phase 1x en fonction de la vitesse de rotation sur deux courbes superposées ?",
+          "type": "single",
+          "o": [
+            "Le diagramme de Bode",
+            "Le diagramme de Nyquist (polaire)",
+            "La cascade (waterfall)",
+            "L'orbite"
+          ],
+          "a": 0,
+          "e": "Le Bode trace amplitude et phase en fonction de la vitesse. Le Nyquist (polaire) trace le vecteur 1x (amplitude, phase) dans le plan complexe, paramétré par la vitesse : une résonance y forme une boucle, ce qui facilite la détection de modes proches.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Un pic de résonance est observé à 30 Hz ; les points à −3 dB (demi-puissance) sont à 28,5 Hz et 31,5 Hz. Quel est le facteur d'amplification Q ?",
+          "type": "num",
+          "a": 10,
+          "tol": 0.2,
+          "unit": "sans unité",
+          "e": "Q = fn / (f2 − f1) = 30 / (31,5 − 28,5) = 10. Amortissement réduit ζ ≈ 1 / (2Q) = 0,05 (5 %). Une force à 30 Hz est amplifiée environ 10 fois : un faible balourd suffit à créer une vibration excessive.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "Un technicien souhaite déterminer les fréquences propres d'un châssis de pompe par essai au choc (bump test) et propose de frapper la structure pendant que la pompe tourne « pour gagner du temps ». Quelle est la bonne réponse ?",
+          "type": "single",
+          "o": [
+            "Acceptable si l'on frappe fort",
+            "Refuser : le bump test classique se réalise machine ARRÊTÉE et consignée. Machine en marche, les réponses forcées (1x, BPF, harmoniques) masquent les fréquences propres et frapper une machine en rotation près des pièces tournantes est dangereux",
+            "Acceptable avec un marteau à embout caoutchouc",
+            "Acceptable à vitesse réduite uniquement"
+          ],
+          "a": 1,
+          "e": "Le bump test repose sur une excitation impulsionnelle et la réponse libre de la structure. Machine en marche, les composantes forcées dominent le spectre et faussent l'identification ; le risque pour l'opérateur est réel. Des techniques avancées (impact synchrone avec moyennage) existent mais ne relèvent pas du bump test simple de terrain.",
+          "isTrap": true,
+          "trapWarning": "Bump test = machine à l'arrêt et consignée. Jamais de choc sur une machine en rotation.",
+          "difficulty": "piege",
+          "gravity": "urgence_arret"
+        },
+        {
+          "t": "Un moteur sur châssis présente une vibration à 1x de 11 mm/s en horizontal et 1,2 mm/s en vertical. Un essai au choc (bump test) machine arrêtée révèle une fréquence propre horizontale à 25,3 Hz pour une vitesse de rotation de 1490 tr/min (24,83 Hz). Quelle action corrective est appropriée ?",
+          "type": "single",
+          "o": [
+            "Laisser la machine fonctionner sans modification",
+            "Raidir la structure (ajout de goussets ou tirants) pour remonter la fréquence propre au-delà de 31 Hz afin de sortir de la zone de résonance",
+            "Changer le sens de rotation du moteur",
+            "Remplacer le câble du capteur"
+          ],
+          "a": 1,
+          "e": "La coïncidence entre la vitesse de rotation (24,83 Hz) et la fréquence propre (25,3 Hz) crée une résonance : le système amplifie la force normale. La solution consiste à désaccorder la structure en augmentant la raideur pour éloigner la fréquence propre d'au moins 20-25 % au-dessus de la vitesse de marche.",
+          "isTrap": true,
+          "trapWarning": "Un 1x très directionnel (H ≫ V) près d'une fréquence propre n'est pas un problème d'équilibrage : raidissez la structure.",
+          "difficulty": "piege",
+          "gravity": "critique"
+        },
+        {
+          "t": "Une structure résonne à 24,83 Hz. On veut la neutraliser par un batteur dynamique accordé (TMD) de raideur k = 2,0 × 10⁶ N/m accordé à 25 Hz. Quelle masse doit-il avoir ?",
+          "type": "num",
+          "a": 81.1,
+          "tol": 1,
+          "unit": "kg",
+          "e": "fn = (1/2π) √(k/m) → m = k / (2πf)² = 2,0 × 10⁶ / (157,08)² = 81,1 kg. Le TMD accordé sur la fréquence d'excitation crée une antirésonance au point de fixation ; il fait cependant apparaître deux nouveaux modes de part et d'autre : il ne convient qu'à une machine à vitesse fixe.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative"
+        },
+        {
+          "t": "Un massif de machine a une masse vibrante de 2000 kg et une raideur équivalente de 5,0 × 10⁷ N/m. Calculez sa fréquence propre et comparez-la à la vitesse de 1490 tr/min.",
+          "type": "num",
+          "a": 25.16,
+          "tol": 0.2,
+          "unit": "Hz",
+          "e": "fn = (1/2π) √(5,0 × 10⁷ / 2000) = (1/2π) × 158,1 = 25,16 Hz. La vitesse vaut 24,83 Hz : écart de 1,3 %, la machine fonctionne en pleine résonance. Une marge de séparation d'au moins 20-25 % est requise.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "critique"
+        },
+        {
+          "t": "Si l'on double la raideur d'une structure sans changer sa masse, par quel facteur est multipliée sa fréquence propre ?",
+          "type": "num",
+          "a": 1.414,
+          "tol": 0.01,
+          "unit": "×",
+          "e": "fn ∝ √(k/m) : doubler k multiplie fn par √2 = 1,414. Inversement, ajouter de la masse abaisse la fréquence propre. Piège fréquent : ajouter une masse « pour calmer » une résonance peut rapprocher la fréquence propre de la vitesse de rotation.",
+          "isTrap": true,
+          "trapWarning": "La fréquence propre varie avec la RACINE de k/m : doubler la raideur ne double pas la fréquence.",
+          "difficulty": "piege",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Quels éléments confirment qu'une vibration 1x élevée est due à une résonance ? (plusieurs réponses)",
+          "type": "multi",
+          "o": [
+            "Pic d'amplitude marqué au Bode lors d'une montée ou descente en vitesse, accompagné d'une rotation de phase de ≈ 180°",
+            "Fréquence propre mesurée au bump test proche de la vitesse de fonctionnement",
+            "Amplitude parfaitement constante quelle que soit la vitesse",
+            "Forte sensibilité de l'amplitude à une petite variation de vitesse ou de raideur (serrage, ajout de masse)"
+          ],
+          "a": [
+            0,
+            1,
+            3
+          ],
+          "e": "La résonance est une amplification sélective : l'amplitude varie fortement autour de fn et la phase bascule. Une amplitude indépendante de la vitesse ne correspond pas à une résonance.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "significative"
+        },
+        {
+          "t": "Lors d'un ralentissement de machine (coast-down), le diagramme de Bode de la composante 1x montre un pic aigu à 1420 tr/min accompagné d'une variation de phase de 180°. À la vitesse de service (1490 tr/min), la vibration reste forte. Quelle est la conclusion ?",
+          "type": "single",
+          "o": [
+            "La machine fonctionne dans la plage d'amplification dynamique d'une fréquence propre située à 1420 tr/min",
+            "Le rotor a perdu une aube",
+            "L'appareil de mesure a une dérive thermique",
+            "La vitesse de rotation est trop basse pour la machine"
+          ],
+          "a": 0,
+          "e": "Le diagramme de Bode met en évidence le passage d'une résonance : un pic d'amplitude 1x associé à une transition de phase de 180° caractérise le franchissement d'une vitesse critique. À 1490 tr/min, la machine est trop proche de cette fréquence propre (1420 tr/min) et subit une amplification dynamique.",
+          "isTrap": true,
+          "trapWarning": "Un pic à la vitesse de rotation associé à un saut de phase au Bode signe une résonance : modifier la structure ou la vitesse, ne pas chercher à corriger une force normale.",
+          "difficulty": "piege",
+          "gravity": "critique",
+          "tool": "freq"
+        },
+        {
+          "t": "Quelle technique de mesure standardisée consiste à exciter une structure de machine à l'arrêt au moyen d'un choc mécanique calibré pour mesurer directement ses fréquences propres ?",
+          "type": "single",
+          "o": [
+            "L'essai au choc impulsionnel (Bump Test)",
+            "L'essai de survitesse continue",
+            "L'essai de court-circuit",
+            "La mesure de décharge partielle"
+          ],
+          "a": 0,
+          "e": "Le Bump Test (essai au choc) consiste à frapper la structure machine à l'arrêt avec un marteau instrumenté ou une masse amortie. L'impact injecte une énergie large bande qui fait résonner la structure sur ses modes propres, directement identifiables sur le spectre de réponse.",
+          "isTrap": false,
+          "difficulty": "facile",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Pour exciter un mode de flexion de châssis attendu vers 20 Hz lors d'un bump test, quel embout de marteau choisir ?",
+          "type": "single",
+          "o": [
+            "Embout acier très dur, pour un maximum d'énergie",
+            "Embout souple (caoutchouc ou plastique tendre) : impact plus long, énergie concentrée en basse fréquence",
+            "N'importe lequel : seule la force compte",
+            "Pas de marteau : un coup de pied suffit"
+          ],
+          "a": 1,
+          "e": "La durée du choc fixe la bande excitée : embout dur = choc bref = large bande jusqu'à plusieurs kHz mais peu d'énergie par Hz en basse fréquence ; embout souple = choc long = énergie concentrée en basse fréquence. Pour un mode à 20 Hz, l'embout souple (et une masse de marteau adaptée) est préférable.",
+          "isTrap": true,
+          "trapWarning": "Un embout dur disperse l'énergie sur une bande trop large : pour les modes de structure basse fréquence, prenez un embout souple.",
+          "difficulty": "piege",
+          "gravity": "mineure"
+        },
+        {
+          "t": "Une turbine traverse sa première vitesse critique (1800 tr/min) au démarrage : le 1x atteint brièvement 90 µm Pk-Pk puis redescend à 25 µm à la vitesse nominale de 3000 tr/min. Le chef de quart veut abaisser le seuil de déclenchement à 60 µm pour toute la plage de vitesse. Quelle est la bonne approche ?",
+          "type": "single",
+          "o": [
+            "Appliquer 60 µm partout",
+            "Le passage d'une critique est un transitoire normal s'il est franchi rapidement : utiliser un seuil de démarrage relevé (multiplication de seuil / « startup inhibit ») ou un seuil adapté à la vitesse, et surveiller l'évolution du pic critique d'un démarrage à l'autre",
+            "Supprimer la protection au démarrage",
+            "Fonctionner en permanence à 1800 tr/min"
+          ],
+          "a": 1,
+          "e": "Un pic transitoire au passage critique est attendu (marge de séparation par rapport à la vitesse nominale). Un seuil unique trop bas déclencherait chaque démarrage. En revanche, un pic critique qui augmente de démarrage en démarrage révèle un balourd croissant ou une fissure. Ne jamais stationner près d'une critique.",
+          "isTrap": true,
+          "trapWarning": "Ne stationnez jamais sur une vitesse critique, mais ne confondez pas son passage transitoire avec un défaut permanent.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Lors d'une analyse de déformée opérationnelle (ODS), la phase 1x verticale mesurée sur la semelle du moteur diffère de 170° de celle mesurée au même endroit sur le massif béton, pour des amplitudes voisines. Quelle conclusion ?",
+          "type": "single",
+          "o": [
+            "Fonctionnement normal",
+            "Mouvement relatif entre le moteur et son support : desserrage d'ancrage, fissure du scellement ou de la soudure, cale défaillante à l'interface",
+            "Balourd pur",
+            "Résonance de l'arbre"
+          ],
+          "a": 1,
+          "e": "Deux pièces boulonnées ensemble doivent vibrer en phase. Un déphasage proche de 180° à travers une interface (semelle / massif, palier / châssis) révèle un jeu ou une rupture de liaison. La phase est l'outil de localisation par excellence.",
+          "isTrap": false,
+          "difficulty": "moyen",
+          "gravity": "critique"
+        },
+        {
+          "t": "Un ventilateur entraîné par variateur de fréquence présente une vibration excessive uniquement entre 1150 et 1250 tr/min, alors qu'il fonctionne parfaitement à 1000 et à 1450 tr/min. Quelle solution immédiate permet d'éviter la résonance en exploitation ?",
+          "type": "single",
+          "o": [
+            "Accélérer au maximum pour dépasser la vitesse nominale",
+            "Programmer une bande de fréquence interdite (skip frequency / fenêtre d'exclusion) dans le variateur de fréquence pour empêcher la machine de tourner en continu dans la plage critique",
+            "Bloquer le variateur à 1200 tr/min",
+            "Diminuer la tension du réseau d'alimentation"
+          ],
+          "a": 1,
+          "e": "Le fait que la vibration n'apparaisse que sur une plage étroite de vitesse signe sans ambiguïté une résonance mécanique. Lorsque la vitesse est variable, la solution la plus économique et immédiate est de configurer une bande de saut (skip frequency) dans le variateur pour interdire le fonctionnement stationnaire dans cette zone.",
+          "isTrap": true,
+          "trapWarning": "Une vibration qui n'apparaît que dans une plage de vitesse étroite est une résonance : traitez la structure ou la consigne, pas seulement le rotor.",
+          "difficulty": "piege",
+          "gravity": "significative"
+        },
+        {
+          "t": "Sur un diagramme polaire (Nyquist) relevé au ralentissement d'un rotor, le vecteur 1x décrit une boucle, l'amplitude maximale étant atteinte à 2350 tr/min. Que représente ce point ?",
+          "type": "single",
+          "o": [
+            "La vitesse nominale",
+            "La vitesse critique (résonance du rotor) : maximum d'amplitude, phase ayant tourné d'environ 90° par rapport à la basse vitesse",
+            "Le point de slow roll",
+            "Le point d'oil whip"
+          ],
+          "a": 1,
+          "e": "Dans la représentation polaire, une résonance apparaît comme une boucle : la vitesse critique correspond au point le plus éloigné de l'origine, où la phase a tourné d'environ 90°. Le vecteur de slow roll (basse vitesse) doit être soustrait pour lire correctement la boucle.",
+          "isTrap": false,
+          "difficulty": "difficile",
+          "gravity": "significative"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1C2733;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, kbd, samp, pre, .font-mono {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* HTML Course Reader Typography & Diagram Protection */
+.course-html-container {
+  word-break: break-word;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.course-html-container h1, 
+.course-html-container h2, 
+.course-html-container h3, 
+.course-html-container h4 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.course-html-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.course-html-container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* ANTI-PRINT & SCREEN CAPTURE HARDENING */
+@media print {
+  html, body {
+    background: #000000 !important;
+    color: #ffffff !important;
+    visibility: hidden !important;
+  }
+  body * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  body::before {
+    content: "DOCUMENT STRICTEMENT CONFIDENTIEL — IMPRESSION & CAPTURE INTERDITES (VIBLAB OCP MS)";
+    display: block !important;
+    visibility: visible !important;
+    color: #ff0000 !important;
+    font-size: 20pt !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    padding-top: 200px !important;
+  }
+}

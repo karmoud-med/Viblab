@@ -1,0 +1,118 @@
+id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Vue Élève — parcours séquentiel</div>
+<div class="dv-card" style="width:1440px">
+<div style="display:flex;flex-direction:column;background:#F6F5F1">
+<div style="height:60px;display:flex;align-items:center;gap:24px;padding:0 20px;background:#fff;border-bottom:1px solid #E3E1DA">
+<div style="display:flex;align-items:center;gap:10px;width:228px">
+<div style="width:32px;height:32px;border-radius:7px;background:#0F1B2D;display:flex;align-items:center;justify-content:center"><svg width="20" height="12" sc-camel-view-box="0 0 20 12" fill="none"><path d="M1 6c2-6 4-6 6 0s4 6 6 0 4-6 6 0" stroke="#E8A317" stroke-width="2" stroke-linecap="round"></path></svg></div>
+<div style="display:flex;flex-direction:column;line-height:1.1"><span style="font-weight:700;font-size:15px;color:#0F1B2D;letter-spacing:-.01em">VibLab</span><span style="font:500 10px 'IBM Plex Mono',monospace;color:#5B6675;letter-spacing:.04em">VIBRATION INTELLIGENCE</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#5B6675"><span>Espace pédagogique</span><span style="color:#B8B5AC">/</span><span style="color:#0F1B2D;font-weight:500">Cours &amp; exercices</span></div>
+<div style="flex:1"></div>
+<div style="display:flex;padding:3px;background:#F0EFEA;border:1px solid #E3E1DA;border-radius:8px;gap:2px;font-size:13px;font-weight:500">
+<span style="padding:5px 12px;border-radius:6px;color:#5B6675">Admin</span>
+<span style="padding:5px 12px;border-radius:6px;color:#5B6675">Formateur</span>
+<span style="padding:5px 12px;border-radius:6px;background:#fff;color:#0F1B2D;box-shadow:0 1px 2px rgba(15,27,45,.12)">Élève</span>
+</div>
+<div style="display:flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #E3E1DA;border-radius:6px;font:500 11px 'IBM Plex Mono',monospace;color:#5B6675"><span style="width:6px;height:6px;border-radius:50%;background:#1E7A4F"></span>WebFFT v2.0</div>
+<div style="display:flex;gap:4px">
+<div style="width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#5B6675"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></div>
+<div style="width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#5B6675"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #E3E1DA">
+<div style="width:32px;height:32px;border-radius:50%;background:#1F4E8C;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center">AO</div>
+<div style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:13px;font-weight:600;color:#0F1B2D">Admin OCP MS</span><span style="font-size:11px;color:#5B6675">admin@viblab.ocpms.com</span></div>
+<svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="#5B6675" stroke-width="2"><path d="m6 9 6 6 6-6"></path></svg>
+</div>
+</div>
+<div style="display:flex">
+<div style="width:248px;flex:none;background:#fff;border-right:1px solid #E3E1DA;padding:20px 12px;display:flex;flex-direction:column;gap:20px">
+<sc-for list="{{ navStudent }}" as="g" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.08em;color:#8A929C;padding:0 10px 6px;text-transform:uppercase">{{ g.title }}</div>
+<sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+<sc-if value="{{ it.active }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;background:#0F1B2D;color:#fff;font-size:13.5px;font-weight:500"><span style="width:5px;height:5px;border-radius:50%;background:#E8A317"></span>{{ it.label }}</div></sc-if>
+<sc-if value="{{ it.idle }}" hint-placeholder-val="{{ true }}"><div style="display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:6px;color:#3A4552;font-size:13.5px" style-hover="background:#F3F2EE"><span style="width:5px;height:5px;border-radius:50%;background:#C9C6BD"></span>{{ it.label }}</div></sc-if>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="flex:1;min-width:0;padding:32px 40px 48px;display:flex;flex-direction:column;gap:28px">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:stretch">
+<div style="display:flex;flex-direction:column;gap:10px;padding:4px 0">
+<div style="display:flex;gap:8px;font:500 11px 'IBM Plex Mono',monospace;color:#5B6675;letter-spacing:.04em"><span>FORMATION CERTIFIANTE</span><span style="color:#B8B5AC">·</span><span>ISO 18436-2 — VCAT-I</span></div>
+<h1 style="margin:0;font-size:30px;line-height:1.15;font-weight:600;color:#0F1B2D;letter-spacing:-.02em">Vibrations Niveau 1</h1>
+<p style="margin:0;font-size:14.5px;line-height:1.55;color:#3A4552;max-width:640px;text-wrap:pretty">Parcours officiel complet d'analyse vibratoire des machines tournantes. Pour valider votre cursus et déverrouiller chaque module, réussissez le QCM associé avec au moins <strong style="color:#0F1B2D">85 %</strong> de bonnes réponses.</p>
+</div>
+<div style="background:#0F1B2D;border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:14px;color:#fff">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#A9B4C2">VALIDATION NIVEAU 1</span><span style="font:500 12px 'IBM Plex Mono',monospace;color:#A9B4C2">1 / 7</span></div>
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1">14 %</span><span style="font-size:13px;color:#A9B4C2">6 modules restants</span></div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+<span style="height:6px;border-radius:2px;background:#E8A317"></span><span style="height:6px;border-radius:2px;background:linear-gradient(90deg,#5E7896 70%,#2A3B52 70%)"></span><span style="height:6px;border-radius:2px;background:#2A3B52"></span><span style="height:6px;border-radius:2px;background:#2A3B52"></span><span style="height:6px;border-radius:2px;background:#2A3B52"></span><span style="height:6px;border-radius:2px;background:#2A3B52"></span><span style="height:6px;border-radius:2px;background:#2A3B52"></span>
+</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:16px">
+<span style="font-size:16px;font-weight:600;color:#0F1B2D">Votre parcours</span>
+<div style="display:flex;gap:4px;font-size:13px">
+<span style="padding:5px 10px;border-radius:6px;background:#0F1B2D;color:#fff;font-weight:500">Tous · 7</span>
+<span style="padding:5px 10px;border-radius:6px;color:#5B6675">À valider · 6</span>
+<span style="padding:5px 10px;border-radius:6px;color:#5B6675">Validés · 1</span>
+</div>
+<div style="flex:1"></div>
+<div style="display:flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid #D6D3CA;background:#fff;border-radius:7px;font-size:13.5px;font-weight:500;color:#0F1B2D">Exercices libres</div>
+</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ path }}" as="m" hint-placeholder-count="7">
+<div style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px">
+<div style="display:flex;flex-direction:column;align-items:center">
+<sc-if value="{{ m.done }}" hint-placeholder-val="{{ false }}"><div style="width:32px;height:32px;border-radius:50%;background:#1E7A4F;display:flex;align-items:center;justify-content:center;margin-top:18px"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg></div></sc-if>
+<sc-if value="{{ m.current }}" hint-placeholder-val="{{ false }}"><div style="width:32px;height:32px;border-radius:50%;background:#E8A317;color:#0F1B2D;font:600 13px 'IBM Plex Mono',monospace;display:flex;align-items:center;justify-content:center;margin-top:18px;box-shadow:0 0 0 5px rgba(232,163,23,.2)">{{ m.n }}</div></sc-if>
+<sc-if value="{{ m.locked }}" hint-placeholder-val="{{ true }}"><div style="width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid #D6D3CA;display:flex;align-items:center;justify-content:center;margin-top:18px"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="#8A929C" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></div></sc-if>
+<div style="flex:1;width:2px;background:#E0DDD4;margin-top:4px"></div>
+</div>
+<div style="padding-bottom:12px">
+<sc-if value="{{ m.current }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #0F1B2D;border-radius:10px;padding:20px 22px;display:flex;gap:24px;align-items:center;box-shadow:0 6px 20px rgba(15,27,45,.08)">
+<div style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0">
+<div style="display:flex;gap:8px;align-items:center"><span style="font:500 11px 'IBM Plex Mono',monospace;color:#5B6675">MODULE {{ m.n }}</span><span style="font-size:11.5px;font-weight:600;color:#7A4A00;background:#FDF0D3;padding:2px 8px;border-radius:4px">En cours</span></div>
+<span style="font-size:18px;font-weight:600;color:#0F1B2D">{{ m.title }}</span>
+<span style="font-size:13.5px;color:#5B6675;line-height:1.5">{{ m.desc }}</span>
+<div style="display:flex;gap:16px;margin-top:4px;font:500 12px 'IBM Plex Mono',monospace;color:#5B6675"><span>{{ m.dur }}</span><span>QCM 30 Qs · seuil 85 %</span><span style="color:#9A5B00">{{ m.score }}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;width:200px">
+<div style="display:flex;align-items:center;justify-content:center;gap:8px;height:40px;background:#0F1B2D;color:#fff;border-radius:7px;font-size:14px;font-weight:500"><svg width="11" height="11" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6 4l14 8-14 8z"></path></svg>Reprendre le cours</div>
+<div style="display:flex;align-items:center;justify-content:center;height:40px;border:1px solid #D6D3CA;border-radius:7px;font-size:14px;font-weight:500;color:#0F1B2D">Passer le QCM</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ m.done }}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border:1px solid #E3E1DA;border-radius:10px;padding:16px 22px;display:flex;gap:24px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+<div style="display:flex;gap:8px;align-items:center"><span style="font:500 11px 'IBM Plex Mono',monospace;color:#5B6675">MODULE {{ m.n }}</span><span style="font-size:11.5px;font-weight:600;color:#1E7A4F;background:#E3F1E9;padding:2px 8px;border-radius:4px">Validé · {{ m.score }}</span></div>
+<span style="font-size:15px;font-weight:600;color:#0F1B2D">{{ m.title }}</span>
+</div>
+<span style="font-size:13.5px;font-weight:500;color:#1F4E8C">Revoir le cours</span>
+<span style="font-size:13.5px;font-weight:500;color:#1F4E8C">Mes résultats</span>
+</div>
+</sc-if>
+<sc-if value="{{ m.locked }}" hint-placeholder-val="{{ true }}">
+<div style="border:1px dashed #D6D3CA;border-radius:10px;padding:16px 22px;display:flex;gap:24px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+<span style="font:500 11px 'IBM Plex Mono',monospace;color:#8A929C">MODULE {{ m.n }} · {{ m.dur }}</span>
+<span style="font-size:15px;font-weight:600;color:#3A4552">{{ m.title }}</span>
+<span style="font-size:13px;color:#6B7480">{{ m.desc }}</span>
+</div>
+<span style="font-size:12.5px;color:#5B6675;text-align:right;width:220px">Déverrouillé après validation du module {{ m.prev }} (≥ 85 %)</span>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" 
