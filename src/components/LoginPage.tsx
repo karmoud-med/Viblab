@@ -12,8 +12,6 @@ import {
   AlertCircle,
   Sun,
   Moon,
-  ChevronDown,
-  ChevronUp,
   HelpCircle
 } from 'lucide-react';
 import { login } from '../services/authService';
@@ -36,7 +34,7 @@ export default function LoginPage({
   const [selectedRole, setSelectedRole] = useState<RoleType>('trainer');
 
   // Credentials
-  const [username, setUsername] = useState<string>('formateur');
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>(true);
@@ -44,7 +42,6 @@ export default function LoginPage({
   // States
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [showDemoAccordeon, setShowDemoAccordeon] = useState<boolean>(false);
   const [showForgotModal, setShowForgotModal] = useState<boolean>(false);
 
   const isLight = theme === 'light';
@@ -52,53 +49,33 @@ export default function LoginPage({
   // Role details metadata
   const roleConfig: Record<RoleType, {
     label: string;
-    defaultUsername: string;
     icon: React.ComponentType<{ className?: string }>;
     description: string;
     btnText: string;
-    demoPass: string;
   }> = {
     trainer: {
       label: 'Formateur',
-      defaultUsername: 'formateur',
       icon: Tv,
       description: 'Animation en salle, projection des modules et corrigés officiels des QCM.',
-      btnText: "Accéder à l'espace Formateur",
-      demoPass: 'TrainerVibLab2026!'
+      btnText: "Accéder à l'espace Formateur"
     },
     admin: {
       label: 'Admin',
-      defaultUsername: 'admin',
       icon: ShieldCheck,
       description: 'Supervision des modules, configuration des examens et gestion des comptes SQLite.',
-      btnText: "Accéder à l'espace Administrateur",
-      demoPass: 'AdminVibLab2026!'
+      btnText: "Accéder à l'espace Administrateur"
     },
     student: {
       label: 'Élève',
-      defaultUsername: 'eleve',
       icon: GraduationCap,
       description: "Parcours d'apprentissage, suivi de progression et passage des QCM de certification.",
-      btnText: "Accéder à l'espace Élève",
-      demoPass: 'StudentVibLab2026!'
+      btnText: "Accéder à l'espace Élève"
     }
   };
 
-  // Switch role and update default username if applicable
+  // Switch role
   const handleSelectRole = (role: RoleType) => {
     setSelectedRole(role);
-    setErrorMessage(null);
-    const prevDefault = roleConfig[selectedRole].defaultUsername;
-    if (!username || username === prevDefault) {
-      setUsername(roleConfig[role].defaultUsername);
-    }
-  };
-
-  // Quick fill from demo credentials
-  const handleQuickFill = (role: RoleType) => {
-    setSelectedRole(role);
-    setUsername(roleConfig[role].defaultUsername);
-    setPassword(roleConfig[role].demoPass);
     setErrorMessage(null);
   };
 
@@ -462,54 +439,6 @@ export default function LoginPage({
                     <span>{loading ? 'Vérification SQLite...' : roleConfig[selectedRole].btnText}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
-
-                  {/* Demo Credentials Collapsible Accordeon */}
-                  <div className="rounded-xl border border-[#F0D49A] bg-[#FDF6E7] overflow-hidden transition-all">
-                    <button
-                      type="button"
-                      onClick={() => setShowDemoAccordeon(!showDemoAccordeon)}
-                      className="w-full flex items-center justify-between p-3 text-left cursor-pointer"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-[10px] font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#E8A317]/20 text-[#7A4A00]">
-                          DÉMO
-                        </span>
-                        <span className="text-xs font-medium text-[#7A4A00]">
-                          Identifiants de démonstration SQLite
-                        </span>
-                      </div>
-                      {showDemoAccordeon ? (
-                        <ChevronUp className="w-4 h-4 text-[#7A4A00]" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-[#7A4A00]" />
-                      )}
-                    </button>
-
-                    {showDemoAccordeon && (
-                      <div className="p-3 pt-0 border-t border-[#F0D49A]/60 flex flex-col gap-2">
-                        <p className="text-[11px] text-[#7A4A00]/80">
-                          Cliquez sur un rôle pour pré-remplir automatiquement le formulaire avec les clés SQLite par défaut :
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-                          {(['trainer', 'admin', 'student'] as RoleType[]).map((r) => (
-                            <button
-                              key={r}
-                              type="button"
-                              onClick={() => handleQuickFill(r)}
-                              className="px-2.5 py-1.5 rounded-lg bg-white/90 hover:bg-white border border-[#F0D49A] text-left transition cursor-pointer shadow-2xs"
-                            >
-                              <div className="text-[10.5px] font-bold text-[#0F1B2D]">
-                                {roleConfig[r].label}
-                              </div>
-                              <div className="font-mono text-[9.5px] text-[#7A4A00] truncate">
-                                {roleConfig[r].defaultUsername}
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
 
                 </form>
 
