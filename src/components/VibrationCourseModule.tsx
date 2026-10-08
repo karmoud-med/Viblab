@@ -165,7 +165,12 @@ export default function VibrationCourseModule({
       try {
         const list = await getAllCourses();
         if (isMounted && list && list.length > 0) {
-          setCourses(list);
+          const hasModules = list.some(c => c.modules && c.modules.length > 0);
+          if (hasModules) {
+            setCourses(list);
+          } else {
+            setCourses(INITIAL_COURSES);
+          }
         }
       } catch (err) {
         console.warn('Could not load courses from SQLite:', err);

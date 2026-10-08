@@ -1571,6 +1571,41 @@ export async function ensureFullDatabaseIntegrity(db: Database): Promise<void> {
       ('usr_trainer', 'mkarmoud', 'KarmoudVibe2026!', 'M. Mohammed KARMOUD (Formateur Expert VCAT-IV)', 'mohammed.karmoud@viblab.com', 'formateur', 1, ?);
   `, [now, now]);
 
+  // 2b. Ensure Default Course (Niveau 1) and its 7 official modules exist in SQLite
+  const defaultCourse = INITIAL_COURSES[0];
+  const courseId = defaultCourse.id || 'vibration_1';
+
+  db.run(`
+    INSERT OR REPLACE INTO courses (id, title, subtitle, description, level, category, total_duration_hours, is_published, created_at, updated_at)
+    VALUES (?, ?, 'Formation Certifiante selon ISO 18436-2 — OCP Maintenance Solutions', ?, 'Niveau 1', 'Analyse Vibratoire', 35.0, 1, '2026-01-15T08:00:00.000Z', ?);
+  `, [courseId, defaultCourse.title, defaultCourse.desc, now]);
+
+  const mRes = db.exec(`SELECT COUNT(*) FROM modules WHERE course_id = '${courseId}';`);
+  const mCount = mRes.length > 0 && mRes[0].values.length > 0 ? (mRes[0].values[0][0] as number) : 0;
+  if (mCount < 7) {
+    const insertModule = db.prepare(`
+      INSERT OR REPLACE INTO modules (id, course_id, title, subtitle, html_path, html_content, order_index, duration_min, access_code, trainer_notes, created_at, updated_at, updated_by)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '2026-01-15T08:00:00.000Z', ?, 'admin');
+    `);
+
+    defaultCourse.modules.forEach((mod, idx) => {
+      insertModule.run([
+        mod.id,
+        courseId,
+        mod.title,
+        mod.subtitle || '',
+        mod.htmlUrl || mod.htmlPath || `/courses/niveau1/${mod.id}.html`,
+        mod.htmlContent || null,
+        idx + 1,
+        mod.durationMin || (45 + idx * 5),
+        mod.password || 'OCPms2026@',
+        mod.trainerNotes || '',
+        now
+      ]);
+    });
+    insertModule.free();
+  }
+
   // 3. Training sessions
   const sRes = db.exec("SELECT COUNT(*) FROM training_sessions WHERE session_code LIKE '%MS%';");
   const sCount = sRes.length > 0 && sRes[0].values.length > 0 ? (sRes[0].values[0][0] as number) : 0;
