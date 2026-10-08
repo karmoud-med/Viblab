@@ -107,41 +107,8 @@ export class SessionAttendanceService {
       const checkRes = db.exec("SELECT COUNT(*) FROM training_sessions WHERE session_code LIKE '%MS%';");
       const hasMaghreb = checkRes.length > 0 && checkRes[0].values.length > 0 && (checkRes[0].values[0][0] as number) > 0;
 
-      // Update trainer to Mohammed Karmoud on any existing rows
-      db.run("UPDATE training_sessions SET trainer_name = 'M. Mohammed KARMOUD (Formateur Expert VCAT-IV)' WHERE trainer_name LIKE '%Amine SALAMAT%';");
-      db.run("UPDATE session_attendance SET marked_by = 'M. Mohammed KARMOUD' WHERE marked_by LIKE '%Amine SALAMAT%';");
-
-      // Purge fake users & invented OCP accounts: ONLY keep real Group 1 trainees!
-      db.run("DELETE FROM session_trainees WHERE session_id != 'sess-ms-vcat1-grp1';");
-      db.run("DELETE FROM session_attendance WHERE session_id != 'sess-ms-vcat1-grp1';");
-      db.run("DELETE FROM users WHERE email LIKE '%@ocpms.ma%' OR email LIKE '%@ocp-ms.com%' OR id = 'usr_student_1' OR id = 'usr_admin_1' OR id = 'usr_trainer_1' OR id LIKE '%ms-g2%' OR id LIKE '%ms-g3%' OR id LIKE '%usr-trainee-g%';");
-      
-      // Purge fake QCM results for Maghreb Steel: they have NOT passed the QCM!
-      db.run("DELETE FROM user_quiz_results;");
-      db.run("DELETE FROM user_progress;");
-
-      // Enforce exact Modèle 5 notes in session_trainees
-      try {
-        db.run(`
-          UPDATE session_trainees 
-          SET notes = 'Totalement émargé (Présent 5/5 jours - 10/10 créneaux signés)' 
-          WHERE matricule NOT IN ('MS-108', 'MS-109', 'MS-112', 'MS-113', 'MS-116');
-
-          UPDATE session_trainees 
-          SET notes = 'Partiellement émargé (Présent Partie 1, non émargé Partie 2 - 6/10 créneaux)' 
-          WHERE matricule IN ('MS-108', 'MS-112', 'MS-113', 'MS-116');
-
-          UPDATE session_trainees 
-          SET notes = 'Non émargé (Absence autorisée mission laboratoire - 0/10 créneaux)' 
-          WHERE matricule = 'MS-109';
-        `);
-      } catch (e) {}
-
       if (!hasMaghreb) {
-        // Reset old dummy sessions and seed the authentic Maghreb Steel dataset
-        db.run('DELETE FROM session_attendance;');
-        db.run('DELETE FROM session_trainees;');
-        db.run('DELETE FROM training_sessions;');
+        // Seed initial Maghreb Steel sessions only if none exist
         await this.seedMaghrebSteelSessions(db);
       }
 

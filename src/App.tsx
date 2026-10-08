@@ -30,9 +30,12 @@ import {
   LogOut,
   User as UserIcon,
   Trophy,
-  UserCheck
+  UserCheck,
+  ArrowRightLeft,
+  X,
+  Shield
 } from 'lucide-react';
-import { getCurrentUser, getActiveViewMode, setActiveViewMode, logout, subscribeAuth, ViewMode } from './services/authService';
+import { getCurrentUser, getActiveViewMode, setActiveViewMode, login, logout, subscribeAuth, ViewMode } from './services/authService';
 import LoginPage from './components/LoginPage';
 import WaveformPhaseSimulator from './components/WaveformPhaseSimulator';
 import SignalGenerator from './components/SignalGenerator';
@@ -82,6 +85,12 @@ export default function App() {
   const [viewMode, setViewMode] = useState<ViewMode>(() => getActiveViewMode());
   const [isCourseFullScreen, setIsCourseFullScreen] = useState<boolean>(false);
   const [isNativeFullscreen, setIsNativeFullscreen] = useState<boolean>(false);
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState<boolean>(false);
+
+  const handleQuickSwitch = async (username: string, pass: string) => {
+    setIsAccountModalOpen(false);
+    await login(username, pass);
+  };
 
   const [theme, setTheme] = useState<'dark' | 'light' | 'mono'>(() => {
     try {
@@ -376,15 +385,37 @@ export default function App() {
             {isNativeFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
 
+          {/* Changer de compte Button */}
+          <button
+            onClick={() => setIsAccountModalOpen(true)}
+            title="Changer de compte / Se connecter avec un autre compte"
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+              isLight 
+                ? 'bg-[#F0F4F9] border-[#BFDBFE] text-[#1D4ED8] hover:bg-[#DBEAFE]' 
+                : 'bg-blue-950/60 border-blue-800 text-blue-300 hover:bg-blue-900'
+            }`}
+          >
+            <ArrowRightLeft className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Changer de compte</span>
+          </button>
+
           {/* User Profile & Logout */}
           <div className={`flex items-center gap-2.5 pl-3 border-l ${
             isLight ? 'border-[#E3E1DA]' : 'border-slate-800'
           }`}>
-            <div className="w-8 h-8 rounded-full bg-[#1F4E8C] text-white text-xs font-semibold flex items-center justify-center shrink-0">
+            <div 
+              onClick={() => setIsAccountModalOpen(true)}
+              className="w-8 h-8 rounded-full bg-[#1F4E8C] text-white text-xs font-semibold flex items-center justify-center shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all"
+              title="Cliquer pour changer de compte"
+            >
               {(currentUser?.fullName || currentUser?.username || 'AO').slice(0, 2).toUpperCase()}
             </div>
-            <div className="hidden lg:flex flex-col leading-tight">
-              <span className={`text-[13px] font-semibold ${isLight ? 'text-[#0F1B2D]' : 'text-white'}`}>
+            <div 
+              onClick={() => setIsAccountModalOpen(true)}
+              className="hidden lg:flex flex-col leading-tight cursor-pointer"
+              title="Cliquer pour changer de compte"
+            >
+              <span className={`text-[13px] font-semibold hover:underline ${isLight ? 'text-[#0F1B2D]' : 'text-white'}`}>
                 {currentUser?.fullName || currentUser?.username}
               </span>
               <span className={`text-[11px] ${isLight ? 'text-[#5B6675]' : 'text-slate-400'}`}>
@@ -393,7 +424,7 @@ export default function App() {
             </div>
             <button
               onClick={handleLogout}
-              title="Déconnexion"
+              title="Déconnexion (retour à l'écran de connexion)"
               className="w-8 h-8 rounded-md flex items-center justify-center text-[#5B6675] hover:text-[#B42318] hover:bg-[#FEE4E2] cursor-pointer transition-colors ml-1"
             >
               <LogOut className="w-4 h-4" />
@@ -401,6 +432,126 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      {/* Modal Changer de Compte */}
+      {isAccountModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className={`w-full max-w-md rounded-2xl border shadow-2xl p-6 space-y-5 transition-colors ${
+            isLight ? 'bg-white border-[#E3E1DA] text-[#0F1B2D]' : 'bg-[#0D1526] border-slate-700 text-slate-100'
+          }`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 flex items-center justify-center">
+                  <ArrowRightLeft className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold">Changer de compte</h3>
+                  <p className="text-xs text-[#5B6675] dark:text-slate-400">Accéder à un autre profil ou se déconnecter</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setIsAccountModalOpen(false)}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className={`p-3.5 rounded-xl border text-xs space-y-1 ${
+              isLight ? 'bg-[#F8F9FA] border-slate-200' : 'bg-slate-900/60 border-slate-800'
+            }`}>
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Compte actuellement connecté :</span>
+              <div className="font-bold text-sm text-[#0F1B2D] dark:text-white flex items-center gap-2">
+                <span>{currentUser?.fullName}</span>
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 uppercase">
+                  {currentUser?.role}
+                </span>
+              </div>
+              <div className="text-[11px] text-slate-500 font-mono">{currentUser?.email || currentUser?.username}</div>
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Basculement rapide en 1 clic :</span>
+
+              {/* Option 1: Mohammed Karmoud */}
+              <button
+                onClick={() => handleQuickSwitch('mkarmoud', 'KarmoudVibe2026!')}
+                className={`w-full text-left p-3 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
+                  currentUser?.username === 'mkarmoud'
+                    ? 'border-blue-500 bg-blue-50/60 dark:bg-blue-950/40'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-blue-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">
+                    MK
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold">M. Mohammed KARMOUD</div>
+                    <div className="text-[11px] text-slate-500">Formateur Expert VCAT-IV &amp; Admin</div>
+                  </div>
+                </div>
+                <span className="text-[11px] font-semibold text-blue-600 dark:text-blue-400">Activer →</span>
+              </button>
+
+              {/* Option 2: Amine Salamat */}
+              <button
+                onClick={() => handleQuickSwitch('admin', 'AdminVibLab2026!')}
+                className={`w-full text-left p-3 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
+                  currentUser?.username === 'admin'
+                    ? 'border-blue-500 bg-blue-50/60 dark:bg-blue-950/40'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-blue-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-700 text-white text-xs font-bold flex items-center justify-center">
+                    AS
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold">M. Amine SALAMAT</div>
+                    <div className="text-[11px] text-slate-500">Gestionnaire Formation (Admin)</div>
+                  </div>
+                </div>
+                <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">Activer →</span>
+              </button>
+
+              {/* Option 3: Apprenant Maghreb Steel */}
+              <button
+                onClick={() => handleQuickSwitch('MS-101', 'MS-2182')}
+                className={`w-full text-left p-3 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
+                  currentUser?.role === 'eleve'
+                    ? 'border-blue-500 bg-blue-50/60 dark:bg-blue-950/40'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-blue-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center">
+                    BR
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold">BOUASSA ROUCHDI (MS-101)</div>
+                    <div className="text-[11px] text-slate-500">Apprenant Tit Mellil (Élève)</div>
+                  </div>
+                </div>
+                <span className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">Activer →</span>
+              </button>
+            </div>
+
+            <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+              <button
+                onClick={() => {
+                  setIsAccountModalOpen(false);
+                  handleLogout();
+                }}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 dark:bg-rose-950/40 dark:border-rose-900 dark:text-rose-300 font-semibold text-xs cursor-pointer transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Se déconnecter (Saisir un autre compte)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Body: Sidebar + Main Content */}
       <div className="flex flex-1 min-h-0">

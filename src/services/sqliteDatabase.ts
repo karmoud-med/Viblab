@@ -11,6 +11,7 @@ import {
   UserLearningSummary 
 } from '../types/course';
 import { INITIAL_COURSES } from '../utils/defaultCourses';
+import { MODULES_DATA, DEFAULT_CONFIGS_DATA, FormationModule } from '../components/formation/formationData';
 
 const IDB_NAME = 'viblab_sqlite_db';
 const IDB_STORE = 'sqlite_binary';
@@ -272,6 +273,36 @@ function initSchema(db: Database) {
       UNIQUE(session_id, trainee_id, day_index, slot)
     );
 
+    CREATE TABLE IF NOT EXISTS quiz_questions (
+      id TEXT PRIMARY KEY,
+      module_id INTEGER NOT NULL,
+      question_type TEXT NOT NULL,
+      title TEXT NOT NULL,
+      question_text TEXT NOT NULL,
+      options_json TEXT NOT NULL,
+      correct_answers_json TEXT NOT NULL,
+      explanation TEXT,
+      trap_warning TEXT,
+      points REAL DEFAULT 1,
+      is_trap INTEGER DEFAULT 0,
+      is_kahoot INTEGER DEFAULT 0,
+      is_enabled INTEGER DEFAULT 1,
+      metadata_json TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS module_quiz_configs (
+      module_id INTEGER PRIMARY KEY,
+      passing_score REAL DEFAULT 85,
+      questions_per_session INTEGER DEFAULT 30,
+      time_limit_minutes INTEGER DEFAULT 45,
+      kahoot_time_sec INTEGER DEFAULT 30,
+      kahoot_random_questions INTEGER DEFAULT 1,
+      kahoot_random_answers INTEGER DEFAULT 1,
+      updated_at TEXT NOT NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_modules_course ON modules(course_id, order_index);
     CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
     CREATE INDEX IF NOT EXISTS idx_progress_user ON user_progress(user_id);
@@ -279,10 +310,12 @@ function initSchema(db: Database) {
     CREATE INDEX IF NOT EXISTS idx_course_status_user ON user_course_status(user_id);
     CREATE INDEX IF NOT EXISTS idx_attendance_session ON session_attendance(session_id, day_index);
     CREATE INDEX IF NOT EXISTS idx_trainees_session ON session_trainees(session_id);
+    CREATE INDEX IF NOT EXISTS idx_quiz_questions_mod ON quiz_questions(module_id);
   `;
   db.run(schemaSql);
 
-  // Safe migrations for columns if user_progress table was previously created
+  // Safe migrations for columns
+  try { db.run("ALTER TABLE quiz_questions ADD COLUMN metadata_json TEXT;"); } catch (e) {}
   try { db.run("ALTER TABLE user_progress ADD COLUMN score REAL DEFAULT 0;"); } catch (e) {}
   try { db.run("ALTER TABLE user_progress ADD COLUMN attempts INTEGER DEFAULT 0;"); } catch (e) {}
   try { db.run("ALTER TABLE user_progress ADD COLUMN passed INTEGER DEFAULT 0;"); } catch (e) {}
@@ -457,18 +490,23 @@ export async function getUsers(): Promise<User[]> {
 
 export async function getUserByUsername(username: string): Promise<(User & { passwordHash: string }) | null> {
   const db = await getSqliteDb();
-  const cleaned = username.trim();
+  const cleaned = username.trim().toLowerCase();
+  const isTrainerAlias = ['formateur', 'mkarmoud', 'mohammed', 'karmoud', 'trainer'].includes(cleaned);
+  const isAdminAlias = ['admin', 'salamat', 'amine', 'gestionnaire'].includes(cleaned);
+
   const stmt = db.prepare(`
     SELECT u.id, u.username, u.password_hash, u.full_name, u.email, u.role, u.is_active, u.created_at, u.last_login_at 
     FROM users u
     LEFT JOIN session_trainees st ON (st.user_id = u.id OR LOWER(st.email) = LOWER(u.email))
-    WHERE LOWER(u.username) = LOWER(?) 
-       OR LOWER(u.email) = LOWER(?) 
-       OR LOWER(u.id) = LOWER(?) 
-       OR LOWER(COALESCE(st.matricule, '')) = LOWER(?)
+    WHERE LOWER(u.username) = ? 
+       OR LOWER(u.email) = ? 
+       OR LOWER(u.id) = ? 
+       OR LOWER(COALESCE(st.matricule, '')) = ?
+       OR (? = 1 AND (u.id = 'usr_trainer' OR LOWER(u.username) = 'mkarmoud'))
+       OR (? = 1 AND (u.id = 'usr_admin' OR LOWER(u.username) = 'admin'))
     LIMIT 1;
   `);
-  stmt.bind([cleaned, cleaned, cleaned, cleaned]);
+  stmt.bind([cleaned, cleaned, cleaned, cleaned, isTrainerAlias ? 1 : 0, isAdminAlias ? 1 : 0]);
   if (stmt.step()) {
     const r = stmt.get();
     stmt.free();
@@ -562,6 +600,23 @@ export async function updateUser(id: string, updates: Partial<{
 
   await logAuditAction('CURRENT_USER', 'UPDATE_USER', 'users', id, `Utilisateur mis à jour: ${JSON.stringify(updates)}`);
   await persistDb();
+
+  // Mettre à jour la session active si l'utilisateur modifié est l'utilisateur connecté
+  try {
+    const raw = localStorage.getItem('viblab_current_user_session');
+    if (raw) {
+      const sess = JSON.parse(raw);
+      if (sess?.user?.id === id) {
+        if (updates.fullName !== undefined) sess.user.fullName = updates.fullName;
+        if (updates.email !== undefined) sess.user.email = updates.email;
+        if (updates.role !== undefined) sess.user.role = updates.role;
+        localStorage.setItem('viblab_current_user_session', JSON.stringify(sess));
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('viblab_auth_updated'));
+        }
+      }
+    }
+  } catch (e) {}
 }
 
 export async function deleteUser(id: string): Promise<void> {
@@ -1563,20 +1618,25 @@ export async function ensureFullDatabaseIntegrity(db: Database): Promise<void> {
     `);
   } catch (e) {}
 
-  // 2. Ensure ONLY the 2 system users exist: Admin & Formateur
+  // 2. Ensure system users exist IF NOT ALREADY in DB (INSERT OR IGNORE)
   db.run(`
-    INSERT OR REPLACE INTO users (id, username, password_hash, full_name, email, role, is_active, created_at)
+    INSERT OR IGNORE INTO users (id, username, password_hash, full_name, email, role, is_active, created_at)
     VALUES 
       ('usr_admin', 'admin', 'AdminVibLab2026!', 'M. Amine SALAMAT (Gestionnaire Formation)', 'amine.salamat@maghrebsteel.ma', 'admin', 1, ?),
-      ('usr_trainer', 'mkarmoud', 'KarmoudVibe2026!', 'M. Mohammed KARMOUD (Formateur Expert VCAT-IV)', 'mohammed.karmoud@viblab.com', 'formateur', 1, ?);
+      ('usr_trainer', 'mkarmoud', 'KarmoudVibe2026!', 'M. Mohammed KARMOUD (Formateur Expert VCAT-IV)', 'mohammed.karmoud@viblab.com', 'admin', 1, ?);
   `, [now, now]);
+
+  // Give Mohammed Karmoud master admin privileges so he can access everything and switch roles
+  try {
+    db.run("UPDATE users SET role = 'admin' WHERE id = 'usr_trainer' OR username = 'mkarmoud';");
+  } catch (e) {}
 
   // 2b. Ensure Default Course (Niveau 1) and its 7 official modules exist in SQLite
   const defaultCourse = INITIAL_COURSES[0];
   const courseId = defaultCourse.id || 'vibration_1';
 
   db.run(`
-    INSERT OR REPLACE INTO courses (id, title, subtitle, description, level, category, total_duration_hours, is_published, created_at, updated_at)
+    INSERT OR IGNORE INTO courses (id, title, subtitle, description, level, category, total_duration_hours, is_published, created_at, updated_at)
     VALUES (?, ?, 'Formation Certifiante selon ISO 18436-2 — OCP Maintenance Solutions', ?, 'Niveau 1', 'Analyse Vibratoire', 35.0, 1, '2026-01-15T08:00:00.000Z', ?);
   `, [courseId, defaultCourse.title, defaultCourse.desc, now]);
 
@@ -1606,6 +1666,9 @@ export async function ensureFullDatabaseIntegrity(db: Database): Promise<void> {
     insertModule.free();
   }
 
+  // 2c. Seed Quiz Questions and Configurations into SQLite if not present
+  await seedQuizQuestionsToSqlite(db);
+
   // 3. Training sessions
   const sRes = db.exec("SELECT COUNT(*) FROM training_sessions WHERE session_code LIKE '%MS%';");
   const sCount = sRes.length > 0 && sRes[0].values.length > 0 ? (sRes[0].values[0][0] as number) : 0;
@@ -1613,54 +1676,284 @@ export async function ensureFullDatabaseIntegrity(db: Database): Promise<void> {
     seedMaghrebSteelSessions(db);
   }
 
-  // 4. Trainees in session_trainees (16 trainees)
+  // 4. Trainees in session_trainees (16 trainees) - only seed on empty database
   const trRes = db.exec("SELECT COUNT(*) FROM session_trainees WHERE session_id = 'sess-ms-vcat1-grp1';");
   const trCount = trRes.length > 0 && trRes[0].values.length > 0 ? (trRes[0].values[0][0] as number) : 0;
-  if (trCount < 16) {
+  if (trCount === 0) {
     seedMaghrebSteelAttendanceAndTrainees(db);
   }
 
-  // 4b. Enforce exact Modèle 5 notes in session_trainees
-  try {
-    db.run(`
-      UPDATE session_trainees 
-      SET notes = 'Totalement émargé (Présent 5/5 jours - 10/10 créneaux signés)' 
-      WHERE matricule NOT IN ('MS-108', 'MS-109', 'MS-112', 'MS-113', 'MS-116');
-
-      UPDATE session_trainees 
-      SET notes = 'Partiellement émargé (Présent Partie 1, non émargé Partie 2 - 6/10 créneaux)' 
-      WHERE matricule IN ('MS-108', 'MS-112', 'MS-113', 'MS-116');
-
-      UPDATE session_trainees 
-      SET notes = 'Non émargé (Absence autorisée mission laboratoire - 0/10 créneaux)' 
-      WHERE matricule = 'MS-109';
-    `);
-  } catch (e) {}
-
-  // 5. Trainee attendance records in session_attendance (160 records)
+  // 5. Trainee attendance records in session_attendance - only seed on empty database
   const attRes = db.exec("SELECT COUNT(*) FROM session_attendance WHERE session_id = 'sess-ms-vcat1-grp1';");
   const attCount = attRes.length > 0 && attRes[0].values.length > 0 ? (attRes[0].values[0][0] as number) : 0;
-  if (attCount < 16) {
+  if (attCount === 0) {
     seedMaghrebSteelAttendanceAndTrainees(db);
   }
 
-  // 6. Ensure the 16 Maghreb Steel trainees exist in users table
+  // 6. Ensure the 16 Maghreb Steel trainees exist in users table (INSERT OR IGNORE to never overwrite)
   for (const u of REAL_MAGHREB_STEEL_USERS_DATA) {
     const userId = `usr-trainee-ms-1-${u.idx}`;
     const username = u.email.split('@')[0];
     db.run(`
-      INSERT OR REPLACE INTO users (id, username, password_hash, full_name, email, role, is_active, created_at)
+      INSERT OR IGNORE INTO users (id, username, password_hash, full_name, email, role, is_active, created_at)
       VALUES (?, ?, ?, ?, ?, 'eleve', 1, ?);
     `, [userId, username, u.pass, u.name, u.email, now]);
   }
 
-  // 7. CRITICAL REQUIREMENT: Purge fake QCM results! Maghreb Steel trainees have NOT passed the QCM!
-  db.run("DELETE FROM user_quiz_results;");
-  db.run("DELETE FROM user_progress;");
-  db.run("UPDATE user_course_status SET status = 'non_commence', progress_percent = 0, modules_completed = 0, average_quiz_score = 0, certified = 0, certified_at = NULL;");
-
   // Persist immediately to IndexedDB
   await persistDb();
+}
+
+// ==========================================
+// QUIZ QUESTIONS & CONFIGS IN SQLITE
+// ==========================================
+
+export async function seedQuizQuestionsToSqlite(db: Database): Promise<void> {
+  try {
+    const qRes = db.exec("SELECT COUNT(*) FROM quiz_questions;");
+    const qCount = qRes.length > 0 && qRes[0].values.length > 0 ? (qRes[0].values[0][0] as number) : 0;
+    if (qCount > 0) return; // Déjà initialisé, préserver les questions de la base
+
+    const now = new Date().toISOString();
+    const insertQ = db.prepare(`
+      INSERT OR REPLACE INTO quiz_questions 
+        (id, module_id, question_type, title, question_text, options_json, correct_answers_json, explanation, trap_warning, points, is_trap, is_kahoot, is_enabled, metadata_json, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    `);
+
+    for (const mod of MODULES_DATA) {
+      if (!Array.isArray(mod.qs)) continue;
+      mod.qs.forEach((q, idx) => {
+        const qId = q.id || `q_m${mod.id}_${idx + 1}`;
+        const optionsJson = JSON.stringify((q as any).o || []);
+        const answersJson = JSON.stringify((q as any).a !== undefined ? (q as any).a : null);
+        const meta = {
+          hint: q.hint,
+          tool: q.tool,
+          pre: q.pre,
+          unit: q.unit,
+          tol: (q as any).tol,
+          difficulty: q.difficulty,
+          category: q.category,
+          gravity: q.gravity,
+          image: q.image || q.imageUrl
+        };
+        insertQ.run([
+          qId,
+          mod.id,
+          q.type || 'single',
+          q.t.slice(0, 60),
+          q.t,
+          optionsJson,
+          answersJson,
+          q.e || '',
+          q.trapWarning || null,
+          1,
+          q.isTrap ? 1 : 0,
+          q.inKahoot ? 1 : 0,
+          q.enabled !== false ? 1 : 0,
+          JSON.stringify(meta),
+          now,
+          now
+        ]);
+      });
+    }
+    insertQ.free();
+
+    // Initialisation des configurations de modules
+    if (DEFAULT_CONFIGS_DATA) {
+      const insertCfg = db.prepare(`
+        INSERT OR REPLACE INTO module_quiz_configs
+          (module_id, passing_score, questions_per_session, time_limit_minutes, kahoot_time_sec, kahoot_random_questions, kahoot_random_answers, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+      `);
+      Object.entries(DEFAULT_CONFIGS_DATA).forEach(([modIdStr, cfg]: [string, any]) => {
+        const mId = Number(modIdStr);
+        insertCfg.run([
+          mId,
+          cfg.passScore ?? 85,
+          cfg.questionsPerExam ?? 30,
+          cfg.timeLimitMin ?? 45,
+          cfg.kahootTimePerQuestion ?? 30,
+          cfg.kahootShuffle ? 1 : 0,
+          cfg.shuffleOptions ? 1 : 0,
+          now
+        ]);
+      });
+      insertCfg.free();
+    }
+  } catch (err) {
+    console.warn('Erreur initialisation questions quiz dans SQLite:', err);
+  }
+}
+
+export async function getQuizQuestionsFromSqlite(): Promise<FormationModule[] | null> {
+  try {
+    const db = await getSqliteDb();
+    const res = db.exec(`
+      SELECT id, module_id, question_type, title, question_text, options_json, correct_answers_json, explanation, trap_warning, points, is_trap, is_kahoot, is_enabled, metadata_json 
+      FROM quiz_questions 
+      ORDER BY module_id ASC, rowid ASC;
+    `);
+
+    if (res.length === 0 || res[0].values.length === 0) {
+      return null;
+    }
+
+    const rows = res[0].values;
+    const questionsByModule: Record<number, any[]> = {};
+    for (const r of rows) {
+      const qId = String(r[0]);
+      const modId = Number(r[1]);
+      const qType = String(r[2]);
+      const qText = String(r[4]);
+      let options: string[] = [];
+      try { options = JSON.parse(String(r[5] || '[]')); } catch (e) {}
+      let answers: any = 0;
+      try { answers = JSON.parse(String(r[6] || '0')); } catch (e) {}
+      const explanation = String(r[7] || '');
+      const trapWarning = r[8] ? String(r[8]) : undefined;
+      const isTrap = Boolean(r[10]);
+      const inKahoot = Boolean(r[11]);
+      const enabled = Boolean(r[12]);
+      let meta: any = {};
+      try { meta = JSON.parse(String(r[13] || '{}')); } catch (e) {}
+
+      const question: any = {
+        id: qId,
+        t: qText,
+        type: qType,
+        e: explanation,
+        trapWarning,
+        isTrap,
+        inKahoot,
+        enabled,
+        o: options,
+        a: answers,
+        ...meta
+      };
+
+      if (!questionsByModule[modId]) questionsByModule[modId] = [];
+      questionsByModule[modId].push(question);
+    }
+
+    return MODULES_DATA.map(baseMod => ({
+      ...baseMod,
+      qs: questionsByModule[baseMod.id] || baseMod.qs
+    }));
+  } catch (err) {
+    console.warn('Erreur lecture questions quiz depuis SQLite:', err);
+    return null;
+  }
+}
+
+export async function saveQuizQuestionsToSqlite(modules: FormationModule[]): Promise<void> {
+  try {
+    const db = await getSqliteDb();
+    const now = new Date().toISOString();
+
+    const stmt = db.prepare(`
+      INSERT OR REPLACE INTO quiz_questions 
+        (id, module_id, question_type, title, question_text, options_json, correct_answers_json, explanation, trap_warning, points, is_trap, is_kahoot, is_enabled, metadata_json, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, COALESCE((SELECT created_at FROM quiz_questions WHERE id = ?), ?), ?);
+    `);
+
+    for (const mod of modules) {
+      if (!Array.isArray(mod.qs)) continue;
+      mod.qs.forEach((q, idx) => {
+        const qId = q.id || `q_m${mod.id}_${idx + 1}`;
+        const optionsJson = JSON.stringify((q as any).o || []);
+        const answersJson = JSON.stringify((q as any).a !== undefined ? (q as any).a : null);
+        const meta = {
+          hint: q.hint,
+          tool: q.tool,
+          pre: q.pre,
+          unit: q.unit,
+          tol: (q as any).tol,
+          difficulty: q.difficulty,
+          category: q.category,
+          gravity: q.gravity,
+          image: q.image || q.imageUrl
+        };
+        stmt.run([
+          qId,
+          mod.id,
+          q.type || 'single',
+          q.t.slice(0, 60),
+          q.t,
+          optionsJson,
+          answersJson,
+          q.e || '',
+          q.trapWarning || null,
+          1,
+          q.isTrap ? 1 : 0,
+          q.inKahoot ? 1 : 0,
+          q.enabled !== false ? 1 : 0,
+          JSON.stringify(meta),
+          qId,
+          now,
+          now
+        ]);
+      });
+    }
+    stmt.free();
+    await persistDb();
+  } catch (err) {
+    console.error('Erreur sauvegarde questions quiz dans SQLite:', err);
+  }
+}
+
+export async function saveModuleQuizConfigsToSqlite(configs: Record<number, any>): Promise<void> {
+  try {
+    const db = await getSqliteDb();
+    const now = new Date().toISOString();
+    const stmt = db.prepare(`
+      INSERT OR REPLACE INTO module_quiz_configs 
+        (module_id, passing_score, questions_per_session, time_limit_minutes, kahoot_time_sec, kahoot_random_questions, kahoot_random_answers, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+    `);
+    for (const [mIdStr, cfg] of Object.entries(configs)) {
+      const mId = Number(mIdStr);
+      stmt.run([
+        mId,
+        cfg.passScore ?? 85,
+        cfg.questionsPerExam ?? 30,
+        cfg.timeLimitMin ?? 45,
+        cfg.kahootTimePerQuestion ?? 30,
+        cfg.kahootShuffle ? 1 : 0,
+        cfg.shuffleOptions ? 1 : 0,
+        now
+      ]);
+    }
+    stmt.free();
+    await persistDb();
+  } catch (err) {
+    console.warn('Erreur sauvegarde configs quiz dans SQLite:', err);
+  }
+}
+
+export async function getModuleQuizConfigsFromSqlite(): Promise<Record<number, any> | null> {
+  try {
+    const db = await getSqliteDb();
+    const res = db.exec("SELECT module_id, passing_score, questions_per_session, time_limit_minutes, kahoot_time_sec, kahoot_random_questions, kahoot_random_answers FROM module_quiz_configs;");
+    if (res.length === 0 || res[0].values.length === 0) return null;
+    const configs: Record<number, any> = {};
+    for (const r of res[0].values) {
+      const mId = Number(r[0]);
+      configs[mId] = {
+        id: mId,
+        passScore: Number(r[1]),
+        questionsPerExam: Number(r[2]),
+        timeLimitMin: Number(r[3]),
+        kahootTimePerQuestion: Number(r[4]),
+        kahootShuffle: Boolean(r[5]),
+        shuffleOptions: Boolean(r[6])
+      };
+    }
+    return configs;
+  } catch (e) {
+    return null;
+  }
 }
 
 

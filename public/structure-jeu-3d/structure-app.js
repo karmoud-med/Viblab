@@ -26,6 +26,7 @@ const kids = [...root.children];
 root.updateMatrixWorld(true);
 const machG = G('ensemble_suspendu', root, new THREE.Vector3(0, YB, 0));
 const misG = G('moteur_desaligne', machG, CPL);
+const misBase = misG.position.clone();
 const looseG = G('moteur_pivot_patte', misG, PIV);
 const motorG = G('moteur', looseG, new THREE.Vector3());
 const motorShaft = G('arbre_moteur_rot', motorG, new THREE.Vector3(0, H, 0));
@@ -53,13 +54,13 @@ function home() { const v = VIEWS[st.tab]; stage._controls.target.set(...v.t); s
 
 // Pièces à animer / surligner
 const byName = (g, n, f = () => true) => { const r = []; g.traverse((o) => { if (o.name === n && f(o)) r.push(o); }); return r; };
-const near = (o, x, z) => Math.abs(o.position.x - x) < 0.01 && (z == null || Math.abs(o.position.z - z) < 0.01);
-const looseBolt = byName(motorG, 'vis_patte', (o) => near(o, -0.4, 0.1))[0];
-const looseWasher = byName(motorG, 'rondelle_patte', (o) => near(o, -0.4, 0.1))[0];
-const looseFoot = byName(motorG, 'patte_moteur', (o) => near(o, -0.4))[0];
-const boltY0 = looseBolt.position.y, washY0 = looseWasher.position.y;
+const near = (o, x, z) => Math.abs(o.position.x - x) < 0.02 && (z == null || Math.abs(o.position.z - z) < 0.02);
+const looseBolt = byName(motorG, 'vis_patte', (o) => near(o, -0.4, 0.1))[0] || byName(motorG, 'vis_patte')[0] || null;
+const looseWasher = byName(motorG, 'rondelle_patte', (o) => near(o, -0.4, 0.1))[0] || byName(motorG, 'rondelle_patte')[0] || null;
+const looseFoot = byName(motorG, 'patte_moteur', (o) => near(o, -0.4))[0] || byName(motorG, 'patte_moteur')[0] || null;
+const boltY0 = looseBolt?.position?.y ?? 0.08, washY0 = looseWasher?.position?.y ?? 0.08;
 const guard = [...(m.cats.get('Accouplement · Protecteur') || [])];
-const glow = (list, col, k) => { for (const o of list) { o.material.emissive.set(col); o.material.emissiveIntensity = k; } };
+const glow = (list, col, k) => { for (const o of list) { if (o?.material?.emissive) { o.material.emissive.set(col); o.material.emissiveIntensity = k; } } };
 const flash = m.flash; flash.material.color.set(0xef4444); flash.material.opacity = 0.7;
 const halo = new THREE.Mesh(new THREE.TorusGeometry(0.075, 0.018, 16, 64).rotateY(Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xf97316, transparent: true, opacity: 0.4, depthWrite: false }));
 halo.name = 'halo_contraintes'; halo.position.copy(CPL); halo.renderOrder = 4; machG.attach(halo);
@@ -173,12 +174,19 @@ function upd() {
   for (const o of frameParts) { o.material.emissive.set(0xdc2626); o.material.emissiveIntensity = 0; }
   aF.visible = aX.visible = st.tab === 'res'; halo.visible = st.tab === 'mis';
   glow([looseFoot, looseBolt, looseWasher], 0xdc2626, st.tab === 'loose' && I > 0 ? 0.55 : 0);
-  if (st.tab !== 'loose') { looseBolt.position.y = boltY0; looseWasher.position.y = washY0; looseG.rotation.set(0, 0, 0); }
-  if (st.tab !== 'mis') { misG.rotation.set(0, 0, 0); misG.position.z = misBase.z; misG.position.y = misBase.y; }
+  if (st.tab !== 'loose') {
+    if (looseBolt) looseBolt.position.y = boltY0;
+    if (looseWasher) looseWasher.position.y = washY0;
+    looseG.rotation.set(0, 0, 0);
+  }
+  if (st.tab !== 'mis') {
+    misG.rotation.set(0, 0, 0);
+    misG.position.z = misBase.z;
+    misG.position.y = misBase.y;
+  }
   if (st.tab !== 'res') machG.rotation.set(0, 0, 0);
   draw();
 }
-const misBase = misG.position.clone();
 
 // ---------- Graphiques ----------
 const noise = Array.from({ length: 400 }, (_, i) => 0.04 + 0.05 * Math.abs(Math.sin(i * 12.9898) * 43758.5453 % 1));
@@ -323,17 +331,19 @@ function tick(t) {
   } else if (st.tab === 'loose') {
     const I = st.loose / 100, lift = 0.05 * I * looseLift(th % (2 * TAU), I);
     looseG.rotation.z = -(lift / 0.16) * 0.85; looseG.rotation.x = -(lift / 0.22) * 0.35;
-    looseBolt.position.y = boltY0 + 0.03 * I; looseBolt.rotation.y = th * 0.02; looseWasher.position.y = washY0 + 0.02 * I;
+    if (looseBolt) { looseBolt.position.y = boltY0 + 0.03 * I; looseBolt.rotation.y = th * 0.02; }
+    if (looseWasher) { looseWasher.position.y = washY0 + 0.02 * I; }
     gap.position.set(-0.4, lift / 2, 0); gap.scale.y = Math.max(lift, 1e-4); gap.visible = lift > 2e-4;
     if (st.lastLift > 1e-4 && lift <= 1e-4 && I > 0.02) st.flashT = 1;
     st.lastLift = lift;
     st.flashT = Math.max(0, st.flashT - dt * 4);
     flash.visible = st.flashT > 0; if (flash.visible) { flash.position.set(-0.4, 0.005, 0.1); flash.scale.setScalar(0.015 + 0.05 * (1 - st.flashT) * (0.4 + I)); flash.material.opacity = 0.8 * st.flashT; }
     shock.visible = st.flashT > 0; shock.position.set(-0.4, 0.004, 0.05); shock.scale.setScalar(0.03 + 0.3 * (1 - st.flashT) * (0.3 + I)); shock.material.opacity = 0.9 * st.flashT;
-    looseFoot.material.emissiveIntensity = I > 0 ? 0.45 + 0.5 * st.flashT : 0;
+    if (looseFoot?.material) looseFoot.material.emissiveIntensity = I > 0 ? 0.45 + 0.5 * st.flashT : 0;
   } else {
     const M = misAmps(), wob = Math.sin(2 * th);
-    misG.position.z = misBase.z + M.par * 0.1; misG.rotation.y = M.ang * 0.3 + 0.01 * M.ang * wob;
+    if (misBase) misG.position.z = misBase.z + M.par * 0.1;
+    misG.rotation.y = M.ang * 0.3 + 0.01 * M.ang * wob;
     halo.material.opacity = (0.25 + 0.6 * Math.abs(wob)) * Math.min(1, st.mis / 30 + 0.1);
     halo.scale.setScalar(1 + 0.25 * Math.abs(wob) * st.mis / 100);
     halo.material.color.setHSL(0.07 - 0.07 * Math.abs(wob) * st.mis / 100, 0.95, 0.55);

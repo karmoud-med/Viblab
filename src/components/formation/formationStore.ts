@@ -1,4 +1,10 @@
 import { FormationModule, FormationQuestion, MODULES_DATA, ModuleConfig, DEFAULT_CONFIGS_DATA } from './formationData';
+import { 
+  saveQuizQuestionsToSqlite, 
+  getQuizQuestionsFromSqlite, 
+  saveModuleQuizConfigsToSqlite, 
+  getModuleQuizConfigsFromSqlite 
+} from '../../services/sqliteDatabase';
 
 const STORAGE_KEY_MODULES = 'viblab_qcm_modules_v9';
 const STORAGE_KEY_CONFIGS = 'viblab_qcm_configs_v9';
@@ -100,7 +106,7 @@ export function loadFormationModules(): FormationModule[] {
 }
 
 /**
- * Sauvegarde les modules personnalisés dans le stockage et synchronise les questions Kahoot
+ * Sauvegarde les modules personnalisés dans le stockage et synchronise dans la base SQLite
  */
 export function saveFormationModules(modules: FormationModule[]): void {
   try {
@@ -119,10 +125,32 @@ export function saveFormationModules(modules: FormationModule[]): void {
     });
     saveKahootSelectedKeys(activeKahootKeys);
 
+    // Sauvegarde permanente directe dans la base SQLite
+    saveQuizQuestionsToSqlite(modules).catch(err => {
+      console.warn('Sauvegarde asynchrone SQLite des questions:', err);
+    });
+
     window.dispatchEvent(new CustomEvent('viblab_qcm_updated'));
   } catch (err) {
     console.error('Erreur sauvegarde modules QCM :', err);
   }
+}
+
+/**
+ * Synchronise les modules et questions directement depuis la base SQLite
+ */
+export async function syncFormationFromSqlite(): Promise<FormationModule[]> {
+  try {
+    const sqliteModules = await getQuizQuestionsFromSqlite();
+    if (sqliteModules && sqliteModules.length > 0) {
+      localStorage.setItem(STORAGE_KEY_MODULES, JSON.stringify(sqliteModules));
+      window.dispatchEvent(new CustomEvent('viblab_qcm_updated'));
+      return sqliteModules;
+    }
+  } catch (err) {
+    console.warn('Sync SQLite questions notice:', err);
+  }
+  return loadFormationModules();
 }
 
 export interface FormationStoreState {
@@ -250,11 +278,14 @@ export function loadModuleConfigs(): Record<number, ModuleConfig> {
 }
 
 /**
- * Sauvegarde les configurations de modules
+ * Sauvegarde les configurations de modules et persiste dans SQLite
  */
 export function saveModuleConfigs(configs: Record<number, ModuleConfig>): void {
   try {
     localStorage.setItem(STORAGE_KEY_CONFIGS, JSON.stringify(configs));
+    saveModuleQuizConfigsToSqlite(configs).catch(err => {
+      console.warn('Sauvegarde asynchrone SQLite des configurations:', err);
+    });
     window.dispatchEvent(new CustomEvent('viblab_qcm_configs_updated'));
   } catch (err) {
     console.error('Erreur sauvegarde configs QCM :', err);

@@ -1221,6 +1221,8 @@ export default function CourseAdminManager({
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-mono font-medium text-[#5B6675] uppercase">Explorer la table SQLite :</span>
               {([
+                'quiz_questions',
+                'module_quiz_configs',
                 'user_course_status',
                 'user_quiz_results',
                 'session_attendance',
@@ -1248,7 +1250,16 @@ export default function CourseAdminManager({
 
             {/* Quick Diagnostic Queries */}
             <div className="flex items-center gap-2 flex-wrap pt-1 text-xs">
-              <span className="text-[11px] font-mono text-[#8A929C] uppercase font-semibold">Requêtes rapides :</span>
+              <button
+                onClick={() => {
+                  const q = `SELECT module_id AS "Module", id AS "ID Question", is_enabled AS "Active", is_kahoot AS "Kahoot Live", is_trap AS "Piège", question_text AS "Énoncé Question" FROM quiz_questions ORDER BY module_id ASC, id ASC LIMIT 50;`;
+                  setSqlQueryInput(q);
+                  executeSqlConsole(q).then(setSqlResult);
+                }}
+                className="px-2.5 py-1 rounded bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE] text-[11px] hover:bg-[#DBEAFE] cursor-pointer font-medium"
+              >
+                🎯 Questions &amp; Kahoot (Table SQLite)
+              </button>
               <button
                 onClick={() => {
                   const q = `SELECT u.full_name, u.role, c.status, c.progress_percent, c.modules_completed, c.average_quiz_score, c.certified, c.certified_at FROM users u LEFT JOIN user_course_status c ON u.id = c.user_id ORDER BY c.progress_percent DESC;`;
@@ -1257,7 +1268,7 @@ export default function CourseAdminManager({
                 }}
                 className="px-2.5 py-1 rounded bg-[#F0F4F9] text-[#1F4E8C] border border-[#D0DFEF] text-[11px] hover:bg-[#E2EDF8] cursor-pointer"
               >
-                📊 Validation & Certification Cours
+                📊 Validation &amp; Certification Cours
               </button>
               <button
                 onClick={() => {
