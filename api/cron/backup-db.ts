@@ -1,10 +1,15 @@
 // api/cron/backup-db.ts - Vercel Serverless Function pour la sauvegarde automatique de la base
 export default async function handler(req: any, res: any) {
-  // 1. Sécurité : Vérifier le token CRON_SECRET
-  const authHeader = req.headers['authorization'];
+  // 1. Sécurité : Vérifier le token CRON_SECRET (via Header Authorization ou paramètre URL ?secret=)
+  const authHeader = req.headers['authorization'] || '';
+  const querySecret = req.query?.secret;
   const cronSecret = process.env.CRON_SECRET;
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  const isAuthorized = !cronSecret || 
+    authHeader === `Bearer ${cronSecret}` || 
+    querySecret === cronSecret;
+
+  if (!isAuthorized) {
     return res.status(401).json({ error: 'Accès refusé : jeton secret invalide.' });
   }
 
