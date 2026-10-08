@@ -6,6 +6,7 @@ export default async function handler(req: any, res: any) {
   const cronSecret = process.env.CRON_SECRET;
 
   const isAuthorized = !cronSecret || 
+    authHeader === cronSecret ||
     authHeader === `Bearer ${cronSecret}` || 
     querySecret === cronSecret;
 
