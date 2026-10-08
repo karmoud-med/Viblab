@@ -38,20 +38,33 @@ export default async function handler(req: any, res: any) {
 
     const backupJsonString = JSON.stringify(backupPayload, null, 2);
 
+    let emailDelivery: any = null;
+
     // 3. Optionnel : Envoi par email via Resend si configuré
     if (process.env.RESEND_API_KEY && process.env.BACKUP_NOTIFICATION_EMAIL) {
       try {
-        await fetch('https://api.resend.com/emails', {
+        const mailResponse = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            from: 'VibLab Backup <backup@viblab.com>',
+            from: process.env.RESEND_FROM_EMAIL || 'VibLab Backup <onboarding@resend.dev>',
             to: [process.env.BACKUP_NOTIFICATION_EMAIL],
             subject: `📦 Sauvegarde Automatique SQLite VibLab — ${new Date().toLocaleDateString('fr-FR')}`,
-            html: `<p>Veuillez trouver ci-joint le dump de sécurité de votre base VibLab (ISO 18436).</p>`,
+            html: `
+              <div style="font-family: sans-serif; padding: 20px; color: #1e293b;">
+                <h2 style="color: #0f172a;">📦 Sauvegarde Automatique VibLab</h2>
+                <p>Votre base de données VibLab a été sauvegardée avec succès.</p>
+                <ul>
+                  <li><strong>Date :</strong> ${new Date().toLocaleString('fr-FR')}</li>
+                  <li><strong>Fichier joint :</strong> <code>${backupFilename}</code></li>
+                  <li><strong>Standard :</strong> ISO 18436 & Modèle 5</li>
+                </ul>
+                <p style="color: #64748b; font-size: 13px;">Ce message est généré automatiquement chaque nuit par le cron de maintenance VibLab.</p>
+              </div>
+            `,
             attachments: [
               {
                 filename: backupFilename,
@@ -60,8 +73,10 @@ export default async function handler(req: any, res: any) {
             ]
           })
         });
-      } catch (mailErr) {
+        emailDelivery = await mailResponse.json();
+      } catch (mailErr: any) {
         console.warn('[Mail warning]', mailErr);
+        emailDelivery = { error: mailErr?.message || 'Erreur envoi email' };
       }
     }
 
@@ -71,6 +86,7 @@ export default async function handler(req: any, res: any) {
       filename: backupFilename,
       sizeBytes: Buffer.byteLength(backupJsonString),
       message: 'Sauvegarde de la base de données générée avec succès.',
+      emailDelivery: emailDelivery,
       downloadPayload: backupPayload
     });
 
